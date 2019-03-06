@@ -1,0 +1,21 @@
+// grid
+$mq-breakpoints: (
+    mobile:  600px,
+    wide: 1600px,
+);
+
+
+// Typography
+$modularscale: (
+  base: 1.6em,
+  ratio: 1.3,
+);
+$font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-heavy: 700;
+
+// colors
+$dark-grey: #333447;
+$light-grey: #999999;
+

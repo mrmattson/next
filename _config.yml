@@ -1,0 +1,50 @@
+# Permalinks
+#
+permalink:           pretty
+
+# Setup
+title:               Riot.js
+tagline:             Simple and elegant component-based UI library
+url:                 http://riot.js.org
+baseurl:             ""
+
+# Markdown
+markdown:           kramdown
+highlighter:        rouge
+extensions:         [fenced_code_blocks]
+redcarpet:
+  extensions:       [with_toc_data,autolink,smart]
+
+# Handling Reading
+safe:               false
+include:            [".htaccess"]
+exclude:            ["*.tag"]
+encoding:           "utf-8"
+markdown_ext:       "markdown,md"
+
+# Assets
+#
+# We specify the directory for Jekyll so we can use @imports.
+sass:
+  sass_dir:         style
+  style:            :compressed
+
+plugins:
+  - jemoji
+
+# About/contact
+author:
+  name:              Riot
+  url:               http://riot.js.org
+  email:             hello.riotjs@gmail.com
+
+# Custom vars
+version:             4.0.0
+version_slurp:       Reboot
+repo:                https://github.com/riot/riot
+twitter_account:     https://twitter.com/riotjs_
+gitter:              https://gitter.im/riot/riot
+
+# Vars needed for the compare.md page
+
+size_min:            6.0

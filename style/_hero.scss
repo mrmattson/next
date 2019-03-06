@@ -1,0 +1,14 @@
+.hero {
+  height: 100vh;
+  align-content: center;
+  text-align: center;
+
+  img {
+    margin: 0 auto;
+  }
+
+  p {
+    color: $light-grey;
+    font-size: ms(1);
+  }
+}

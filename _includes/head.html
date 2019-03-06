@@ -1,0 +1,30 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="theme-color" content="#FF0044">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+
+  <title>
+    {{ page.title }}{% if page.path != "index.md" %} &middot; {{ site.title }} {% endif %}
+  </title>
+
+  {% if page.description %}
+    <meta name="description" content="{{ page.description }}">
+  {% endif %}
+
+  <!-- favicons -->
+  <link rel="shortcut icon" href="/img/favicon-152x152.png">
+  <link rel="icon" type="image/png" sizes="152x152" href="/img/favicon-152x152.png">
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/img/favicon-152x152.png">
+
+  <!-- RSS
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="/atom.xml">
+  -->
+
+  <!-- style -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/style.css">
+
+</head>

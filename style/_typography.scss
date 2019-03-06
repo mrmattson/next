@@ -1,0 +1,46 @@
+// simplify rem font size handling
+html {
+  font-size:62.5%;
+}
+
+body {
+  font-family: $font-family;
+  color: $dark-grey;
+  line-height: 1.4;
+}
+
+h1 {
+  font-size: ms(5);
+  line-height: 1.2;
+  margin-bottom: 2.2rem;
+}
+
+h2 {
+  font-size: ms(3.2);
+  line-height: 1;
+}
+
+h3 {
+  font-size: ms(2.8);
+  line-height: 1;
+}
+
+h4 {
+  font-size: ms(2.2);
+  line-height: 1;
+}
+
+h5 {
+  font-size: ms(1.8);
+  line-height: 1;
+}
+
+h6 {
+  font-size: ms(1.2);
+  line-height: 1.2;
+}
+
+p, pre {
+  font-size: ms(0.6);
+  font-weight: $font-weight-regular;
+}
