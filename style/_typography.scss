@@ -12,35 +12,79 @@ body {
 h1 {
   font-size: ms(5);
   line-height: 1.2;
-  margin-bottom: 2.2rem;
+  margin-bottom: 1.2rem;
+
+  @include mq($until: mobile) {
+    font-size: ms(3);
+  }
 }
 
 h2 {
   font-size: ms(3.2);
-  line-height: 1;
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+
+  @include mq($until: mobile) {
+    font-size: ms(2);
+  }
 }
 
 h3 {
   font-size: ms(2.8);
   line-height: 1;
+  margin-bottom: 0.6rem;
+
+  @include mq($until: mobile) {
+    font-size: ms(1.6);
+  }
 }
 
 h4 {
   font-size: ms(2.2);
   line-height: 1;
+  margin-bottom: 0.6rem;
+
+  @include mq($until: mobile) {
+    font-size: ms(1.2);
+  }
 }
 
 h5 {
   font-size: ms(1.8);
   line-height: 1;
+  margin-bottom: 0.6rem;
+
+  @include mq($until: mobile) {
+    font-size: ms(0.8);
+  }
 }
 
 h6 {
   font-size: ms(1.2);
   line-height: 1.2;
+  margin-bottom: 0.6rem;
+
+  @include mq($until: mobile) {
+    font-size: ms(0.6);
+  }
 }
 
-p, pre {
+p, ul, ol, pre {
   font-size: ms(0.6);
+  margin-bottom: 0;
   font-weight: $font-weight-regular;
+
+  @include mq($until: mobile) {
+    font-size: ms(0.2);
+  }
+}
+
+a {
+  color: $primary;
+  text-decoration: none;
+
+  &:hover, &:focus, &:active {
+    color: darken($primary, 10%);
+    text-decoration: underline;
+  }
 }
