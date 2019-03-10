@@ -22,7 +22,7 @@ h1 {
 h2 {
   font-size: ms(3.2);
   line-height: 1.2;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.6rem;
 
   @include mq($until: 'mobile') {
     font-size: ms(2);
@@ -32,7 +32,7 @@ h2 {
 h3 {
   font-size: ms(2.8);
   line-height: 1;
-  margin-bottom: 0.6rem;
+  margin-bottom: 1.6rem;
 
   @include mq($until: 'mobile') {
     font-size: ms(1.6);
@@ -42,7 +42,7 @@ h3 {
 h4 {
   font-size: ms(2.2);
   line-height: 1;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.6rem;
 
   @include mq($until: 'mobile') {
     font-size: ms(1.2);
@@ -71,12 +71,17 @@ h6 {
 
 p, ul, ol, pre {
   font-size: ms(0.6);
-  margin-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 1.2rem;
   font-weight: $font-weight-regular;
 
   @include mq($until: 'mobile') {
     font-size: ms(0.2);
   }
+}
+
+p, li {
+  hyphens: auto;
 }
 
 a {
@@ -88,3 +93,26 @@ a {
     text-decoration: underline;
   }
 }
+
+blockquote {
+  font-family: Georgia, serif;
+  background: lighten($paper-white, 3%);
+  border-left: 10px solid $paper-white;
+  margin: 1.6rem 1rem 3.2rem;
+  padding: 1.6rem 1rem;
+  quotes: "\201C""\201D""\2018""\2019";
+
+  &::before {
+    color: $light-grey;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+
+  p {
+    display: inline;
+  }
+}
+

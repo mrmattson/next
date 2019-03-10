@@ -160,6 +160,6 @@ Riot is Web Components for everyone. Think React + Polymer but without the bloat
 
 We should focus on reusable components instead of templates. According to the developers of React:
 
-> "Templates separate technologies, not concerns."
+> Templates separate technologies, not concerns.
 
 By having related layout and logic together under the same component the overall system becomes cleaner. We respect React for this important insight.

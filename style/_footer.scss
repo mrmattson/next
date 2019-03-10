@@ -1,7 +1,14 @@
 .footer {
-  margin: 6.8rem 0 0;
+  margin: 4rem 0 0;
   border-top: 0.1rem solid $paper-white;
-  padding: 1.6rem 0 4rem;
+
+  @include mq($from: 'mobile') {
+    padding: 1.2rem 0 3.2rem;
+  }
+
+  @include mq($until: 'mobile') {
+    padding: 0.6rem 0 3.2rem;
+  }
 
   .logo {
     @include mq($from: 'mobile') {
@@ -10,7 +17,7 @@
     }
 
     @include mq($until: 'mobile') {
-      margin-top: 2.4rem;
+      margin-top: 1.6rem;
     }
 
     img {
@@ -49,12 +56,6 @@
   }
 
   .extra {
-    @include mq($from: 'mobile') {
-      margin-top: 3.2rem;
-    }
-
-    @include mq($until: 'mobile') {
-      margin-top: 2.4rem;
-    }
+    margin-top: 2.2rem;
   }
 }
