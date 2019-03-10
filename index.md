@@ -4,31 +4,6 @@ title: Riot.js — Simple and elegant component-based UI library
 description: Riot lets you build user interfaces with custom tags using simple and enjoyable syntax.
 ---
 
-<grid class="hero" columns="12">
-  <c span="4-9" span-s="3-10">
-    <img src="/img/logo/square.svg">
-  </c>
-  <c span="row">
-    <h1>Simple and elegant component-based UI library</h1>
-    <p>Custom tags • Enjoyable syntax • Elegant API • Tiny size</p>
-  </c>
-  <c span="row">
-    <nav>
-      <ul>
-        <li>
-          <a href="/documentation">Documentation</a>
-        </li>
-        <li>
-          <a href="/api">API</a>
-        </li>
-        <li>
-          <a href="/download">Download</a>
-        </li>
-      </ul>
-    </nav>
-  </c>
-</grid>
-
 ## Why do we need a new UI library?
 
 The frontend space is indeed crowded, but we honestly feel the solution is still "out there". We believe Riot.js offers the right balance for solving the great puzzle.

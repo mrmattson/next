@@ -1,0 +1,60 @@
+.footer {
+  margin: 6.8rem 0 0;
+  border-top: 0.1rem solid $paper-white;
+  padding: 1.6rem 0 4rem;
+
+  .logo {
+    @include mq($from: 'mobile') {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    @include mq($until: 'mobile') {
+      margin-top: 2.4rem;
+    }
+
+    img {
+      margin-top: 1rem;
+      width: 16rem;
+    }
+  }
+
+  .menu, .extra {
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+
+      li {
+        a {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .menu {
+    margin-top: 1.6rem;
+
+    ul {
+      li {
+        a {
+          padding: 0.4rem 0;
+        }
+      }
+    }
+  }
+
+  .extra {
+    @include mq($from: 'mobile') {
+      margin-top: 3.2rem;
+    }
+
+    @include mq($until: 'mobile') {
+      margin-top: 2.4rem;
+    }
+  }
+}
