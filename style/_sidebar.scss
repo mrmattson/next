@@ -1,0 +1,58 @@
+.sidebar {
+  padding: 0 1.6rem;
+
+  @include mq($from: 'mobile') {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: $sidebar-width;
+    height: 100vh;
+    overflow: auto;
+  }
+
+  .logo {
+    padding: 1.6rem 0 0;
+    display: inline-block;
+    width: 16rem;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  h2 {
+    font-size: ms(0.6);
+    padding-top: 0;
+    margin-bottom: 0;
+  }
+
+  .main-menu {
+    ul {
+      li {
+        a {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.6rem 0;
+
+    li {
+      ul > li {
+        padding-left: 1.6rem;
+      }
+
+      a {
+        color: $dark-grey;
+
+        &:focus, &:active, &:target {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

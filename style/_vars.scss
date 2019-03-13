@@ -1,8 +1,11 @@
 // grid
 $mq-breakpoints: (
-    mobile:  600px,
+    mobile: 780px,
     wide: 1600px,
 );
+
+$container-max-width: 90rem;
+$sidebar-width: 32rem;
 
 
 // Typography

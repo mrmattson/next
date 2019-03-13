@@ -30,7 +30,7 @@ h2 {
 }
 
 h3 {
-  font-size: ms(2.8);
+  font-size: ms(2);
   line-height: 1;
   margin-bottom: 1.6rem;
 
@@ -40,7 +40,7 @@ h3 {
 }
 
 h4 {
-  font-size: ms(2.2);
+  font-size: ms(1.6);
   line-height: 1;
   margin-bottom: 1.6rem;
 
@@ -50,7 +50,7 @@ h4 {
 }
 
 h5 {
-  font-size: ms(1.8);
+  font-size: ms(1.2);
   line-height: 1;
   margin-bottom: 0.6rem;
 
@@ -60,7 +60,7 @@ h5 {
 }
 
 h6 {
-  font-size: ms(1.2);
+  font-size: ms(0.8);
   line-height: 1.2;
   margin-bottom: 0.6rem;
 
@@ -69,7 +69,20 @@ h6 {
   }
 }
 
-p, ul, ol, pre {
+h1, h2, h3, h4, h5 {
+  a:empty {
+    display: inline-block;
+    padding-top: 6.4rem;
+
+    &:before {
+      content: '#';
+      display: inline-block;
+      font-size: 1em;
+    }
+  }
+}
+
+p, pre {
   font-size: ms(0.6);
   margin-top: 0;
   margin-bottom: 1.2rem;
@@ -78,6 +91,10 @@ p, ul, ol, pre {
   @include mq($until: 'mobile') {
     font-size: ms(0.2);
   }
+}
+
+ul, ol {
+  font-size: 1.6rem;
 }
 
 p, li {

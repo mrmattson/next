@@ -1,0 +1,24 @@
+.search {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: white;
+  padding: 1.6rem 0 1.2rem;
+  font-size: ms(0.4);
+  justify-content: stretch;
+  font-weight: bold;
+
+  input {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 1.6rem;
+  }
+
+  .algolia-autocomplete {
+    width: 50%;
+
+    @include mq($until: 'mobile') {
+      width: 100%;
+    }
+  }
+}

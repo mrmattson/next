@@ -3,9 +3,24 @@
 
 {% include head.html %}
 
-<body id="{{ page.id }}" class="{{ page.class }}">
-  {{ content }}
+<body id="{{ page.id }}" class="{{ page.class }} detail">
+
+  {% include sidebar.html %}
+  <main class="container">
+    {% include search.html %}
+    {% include anchor_headings.html html=content beforeHeading=true h_max=3 %}
+  </main>
 
   {% include footer.html %}
+
+  <script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+  <script>
+    docsearch({
+      apiKey: '7bd0a67ac7a1cccd05d0722dba941498',
+      indexName: 'riotjs',
+      inputSelector: '.doc-search',
+      debug: false // Set debug to true if you want to inspect the dropdown
+    })
+  </script>
 </body>
 </html>
