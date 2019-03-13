@@ -1,15 +1,17 @@
 ---
 # global style
 ---
+// variables
+@import "vars";
 
 // vendor
+
 @import "vendor/modularscale";
 @import "vendor/mq";
 @import "vendor/raster";
 @import "vendor/mathsass/math";
 // general stuff
 @import "reset";
-@import "vars";
 @import "typography";
 @import "main";
 
