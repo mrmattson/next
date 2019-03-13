@@ -4,37 +4,22 @@
       <grid columns="12">
         <c span="6" span-s="12">
           <nav class="menu">
-            <ul>
-              <li>
-                <a href="/documentation">
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a href="/api">
-                  API
-                </a>
-              </li>
-              <li>
-                <a href="/download">
-                  Download
-                </a>
-              </li>
-              <li>
-                <a target="_blank" href="https://opencollective.com/riot/">
-                  Buy us a coffee
-                </a>
-              </li>
-              <li>
-                <a href="/v3/">
-                  Riot v3,v2 & v1
-                </a>
-              </li>
-            </ul>
+            {% include main-menu.html %}
           </nav>
           <nav class="extra">
             <ul>
               <li><a target="_blank" href="{{ site.repo }}"><img title="Riot on github" src="https://img.shields.io/badge/GITHUB-REPO_%E2%86%92-fc0e49.svg?style=flat-square"></a></li>
+              <li>
+                <a target="_blank" href="https://opencollective.com/riot/">
+                  <img title="Do a donation" src="https://img.shields.io/badge/DONATE-%E2%9D%A4-fc0e49.svg?style=flat-square"/>
+                </a>
+              </li>
+              <li>
+                <a href="/v3/">
+                  <img title="Riot v3,v2 & v1" src="https://img.shields.io/badge/RIOT-v3,v2 & v1-cccb2d.svg?style=flat-square">
+                </a>
+              </li>
+
               <li><a target="_blank" href="{{ site.gitter }}"><img title="Join the chat at https://gitter.im/riot/riot" src="https://img.shields.io/badge/GITTER-JOIN_CHAT_%E2%86%92-1dce73.svg?style=flat-square"></a></li>
               <li><a target="_blank" href="{{ site.twitter_account }}"><img title="follow riot.js on twitter" src="https://img.shields.io/twitter/follow/riotjs_.svg?style=flat-square"></a></li>
             </ul>
