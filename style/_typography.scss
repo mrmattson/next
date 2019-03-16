@@ -12,6 +12,7 @@ body {
 h1 {
   font-size: ms(5);
   line-height: 1.2;
+  margin-top: 1.6rem;
   margin-bottom: 1.2rem;
 
   @include mq($until: 'mobile') {
@@ -22,7 +23,8 @@ h1 {
 h2 {
   font-size: ms(3.2);
   line-height: 1.2;
-  margin-bottom: 1.6rem;
+  margin-top: 1.6rem;
+  margin-bottom: 1.2rem;
 
   @include mq($until: 'mobile') {
     font-size: ms(2);
@@ -32,7 +34,8 @@ h2 {
 h3 {
   font-size: ms(2);
   line-height: 1;
-  margin-bottom: 1.6rem;
+  margin-top: 1.6rem;
+  margin-bottom: 1.2rem;
 
   @include mq($until: 'mobile') {
     font-size: ms(1.6);
@@ -42,7 +45,7 @@ h3 {
 h4 {
   font-size: ms(1.6);
   line-height: 1;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.2rem;
 
   @include mq($until: 'mobile') {
     font-size: ms(1.2);
@@ -70,19 +73,24 @@ h6 {
 }
 
 h1, h2, h3, h4, h5 {
+  &:target:before {
+    content: "";
+    display: block;
+    padding-top: 7.2rem;
+  }
+
   a:empty {
     display: inline-block;
-    padding-top: 7.2rem;
 
     &:before {
       content: '#';
-      display: inline-block;
+      display: block;
       font-size: 1em;
     }
   }
 }
 
-p, pre {
+p, pre, ul, ol {
   font-size: ms(0.6);
   margin-top: 0;
   margin-bottom: 1.2rem;
@@ -91,10 +99,6 @@ p, pre {
   @include mq($until: 'mobile') {
     font-size: ms(0.2);
   }
-}
-
-ul, ol {
-  font-size: 1.6rem;
 }
 
 p, li {

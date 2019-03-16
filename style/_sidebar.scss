@@ -39,6 +39,7 @@
   ul {
     list-style: none;
     margin: 0;
+    font-size: 1.6rem;
     padding: 0.6rem 0;
 
     li {
@@ -52,7 +53,7 @@
         padding: 0.2rem 0;
         color: $dark-grey;
 
-        &:focus, &:active, &:hover {
+        &:focus, &:active, &:hover, &.active {
           color: $primary;
           text-decoration: underline;
         }
