@@ -6,3 +6,6 @@
 
 - path: /compiler
   label: Compiler
+
+- path: /faq
+  label: FAQ

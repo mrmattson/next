@@ -20,3 +20,18 @@
     width: 100%;
   }
 }
+
+.ds-dropdown-menu {
+  .algolia-docsearch-suggestion--category-header {
+    padding: 1.2rem;
+  }
+
+  /* Main category headers */
+  .algolia-docsearch-suggestion--category-header {
+    background-color: $paper-white;
+  }
+  /* Highlighted search terms */
+  .algolia-docsearch-suggestion--highlight {
+    color: $primary;
+  }
+}
