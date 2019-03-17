@@ -50,6 +50,10 @@
       li {
         a {
           padding: 0.4rem 0;
+
+          &.active {
+            font-weight: bold;
+          }
         }
       }
     }

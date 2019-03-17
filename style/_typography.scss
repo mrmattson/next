@@ -12,8 +12,8 @@ body {
 h1 {
   font-size: ms(5);
   line-height: 1.2;
-  margin-top: 1.6rem;
-  margin-bottom: 1.2rem;
+  margin-top: 2.4rem;
+  margin-bottom: 3.2rem;
 
   @include mq($until: 'mobile') {
     font-size: ms(3);
@@ -23,7 +23,7 @@ h1 {
 h2 {
   font-size: ms(3.2);
   line-height: 1.2;
-  margin-top: 1.6rem;
+  margin-top: 2.4rem;
   margin-bottom: 1.2rem;
 
   @include mq($until: 'mobile') {
@@ -34,7 +34,7 @@ h2 {
 h3 {
   font-size: ms(2);
   line-height: 1;
-  margin-top: 1.6rem;
+  margin-top: 1.8rem;
   margin-bottom: 1.2rem;
 
   @include mq($until: 'mobile') {

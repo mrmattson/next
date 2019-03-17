@@ -1,0 +1,8 @@
+- path: /documentation
+  label: Documentation
+
+- path: /api
+  label: API
+
+- path: /compiler
+  label: Compiler

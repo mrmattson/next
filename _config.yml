@@ -37,14 +37,3 @@ author:
   name:              Riot
   url:               http://riot.js.org
   email:             hello.riotjs@gmail.com
-
-# Custom vars
-version:             4.0.0
-version_slurp:       Reboot
-repo:                https://github.com/riot/riot
-twitter_account:     https://twitter.com/riotjs_
-gitter:              https://gitter.im/riot/riot
-
-# Vars needed for the compare.md page
-
-size_min:            6.0
