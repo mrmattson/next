@@ -3,55 +3,73 @@ layout: detail
 title: Documentation
 ---
 
-
-
 ## Example
 
 Riot custom tags are the building blocks for user interfaces. They make the "view" part of the application. Let's start with an extended TODO example highlighting various features of Riot:
 
 ```html
 <todo>
-
-  <h3>{ opts.title }</h3>
+  <h3>{ props.title }</h3>
 
   <ul>
-    <li each={ items }>
-      <label class={ completed: done }>
-        <input type="checkbox" checked={ done } onclick={ parent.toggle }> { title }
+    <li each={ item in state.items }>
+      <label class={ item.done ? 'completed' : null }>
+        <input
+          type="checkbox"
+          checked={ item.done }
+          onclick={ () => toggle(item) }>
+        { item.title }
       </label>
     </li>
   </ul>
 
   <form onsubmit={ add }>
-    <input ref="input" onkeyup={ edit }>
-    <button disabled={ !text }>Add #{ items.length + 1 }</button>
+    <input onkeyup={ edit }>
+    <button disabled={ !state.text }>
+      Add #{ state.items.length + 1 }
+    </button>
   </form>
 
   <script>
-    this.items = opts.items
+    export default {
+      onBeforeMount(state, props) {
+        // initial state
+        this.state = {
+          items: props.items,
+          text: ''
+        }
+      },
+      edit(e) {
+        // update only the text state
+        this.update({
+          text: e.target.value
+        })
+      },
+      add(e) {
+        e.preventDefault()
 
-    edit(e) {
-      this.text = e.target.value
-    }
-
-    add(e) {
-      e.preventDefault()
-      if (this.text) {
-        this.items.push({ title: this.text })
-        this.text = this.refs.input.value = ''
+        if (this.state.text) {
+          this.update({
+            items: [
+              ...this.state.items,
+              // add a new item
+              {title: this.state.text}
+            ],
+            text: ''
+          })
+        }
+      },
+      toggle(item) {
+        item.done = !item.done
+        // trigger a component update
+        this.update()
       }
     }
-
-    toggle(e) {
-      var item = e.item
-      item.done = !item.done
-    }
   </script>
-
 </todo>
 ```
 
-Custom tags are [compiled](/guide/compiler/) to JavaScript.
+Custom tags are [compiled](/compiler/) to javascript.
 
 See the [live demo](https://riot.js.org/examples/plunker/?app=todo-app), browse the [sources](https://github.com/riot/examples/tree/gh-pages/todo-app), or download the [zip](https://github.com/riot/examples/archive/gh-pages.zip).
 
@@ -59,11 +77,11 @@ See the [live demo](https://riot.js.org/examples/plunker/?app=todo-app), browse 
 
 ## Tag syntax
 
-A Riot tag is a combination of layout (HTML) and logic (JavaScript). Here are the basic rules:
+A Riot tag is a combination of layout (HTML) and logic (javascript). Here are the basic rules:
 
 * HTML is defined first and the logic is enclosed inside an optional `<script>` tag. *note: the script tag can not be used when including tag definitions in the document body, only in external tag files*
-* Without the `<script>` tag the JavaScript starts where the last HTML tag ends.
-* Custom tags can be empty, HTML only or JavaScript only
+* Without the `<script>` tag the javascript starts where the last HTML tag ends.
+* Custom tags can be empty, HTML only or javascript only
 * Quotes are optional: `<foo bar={ baz }>` becomes `<foo bar="{ baz }">`.
 * Smart ES6 like method syntax is supported: `methodName() { }` becomes `this.methodName = function() {}.bind(this)` where `this` always points to the current tag instance.
 * A shorthand syntax for class names is available: `class={ completed: done }` renders to `class="completed"`when the value of `done` is a true value.
@@ -272,7 +290,7 @@ Inside the tag the options can be referenced with the `opts` variable as follows
   <!-- Options in HTML -->
   <h3>{ opts.title }</h3>
 
-  // Options in JavaScript
+  // Options in javascript
   var title = opts.title
 
 </my-tag>
@@ -283,7 +301,7 @@ Inside the tag the options can be referenced with the `opts` variable as follows
 A tag is created in following sequence:
 
 1. Tag is constructed
-2. Tag's JavaScript logic is executed
+2. Tag's javascript logic is executed
 3. HTML expressions are calculated
 4. Tag is mounted on the page and "mount" event is fired
 
@@ -452,7 +470,7 @@ Expressions can set attributes or nested text nodes:
 </h3>
 ```
 
-Expressions are 100% JavaScript. A few examples:
+Expressions are 100% javascript. A few examples:
 
 ```js
 { title || 'Untitled' }
@@ -717,7 +735,7 @@ See [API docs](/api/#yield) for `yield`.
 
 ## Named elements
 
-Elements with `ref` attribute are automatically linked to the context under `this.refs` so you'll have an easy access to them with JavaScript:
+Elements with `ref` attribute are automatically linked to the context under `this.refs` so you'll have an easy access to them with javascript:
 
 ```html
 <login>
@@ -821,7 +839,7 @@ Conditionals let you show / hide elements based on a condition. For example:
 </div>
 ```
 
-Again, the expression can be just a simple property or a full JavaScript expression. The following special attributes are available:
+Again, the expression can be just a simple property or a full javascript expression. The following special attributes are available:
 
 - `show` – show the element using `style="display: ''"` when the value is true
 - `hide` – hide the element using `style="display: none"` when the value is true

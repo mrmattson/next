@@ -183,7 +183,7 @@ Following properties are set for each tag instance:
 - `tags` - nested custom tags
 
 
-You can use these references in both the HTML and JavaScript code. For example:
+You can use these references in both the HTML and javascript code. For example:
 
 
 ``` html
@@ -204,7 +204,7 @@ You can freely set any data to the instance (aka "context") and they are availab
 </my-tag>
 ```
 
-Note: if you have some globals, you can also use these references in both the HTML and JavaScript code:
+Note: if you have some globals, you can also use these references in both the HTML and javascript code:
 
 ```js
 window.someGlobalVariable = 'Hello!'
