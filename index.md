@@ -128,7 +128,7 @@ One of the design goals was to introduce a powerful tag syntax with as little bo
 Riot has between 10 and 100 times fewer API methods than other UI libraries.
 
 - Less to learn. Fewer books and tutorials to view
-- Only template directives `if`, `each` and `is`
+- Only 3 template directives to learn `if`, `each` and `is`
 - Less proprietary stuff and more standard stuff
 
 
