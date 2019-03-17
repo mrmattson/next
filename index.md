@@ -17,7 +17,6 @@ Riot brings custom elements to all modern browsers without the use of any polyfi
 
 ``` html
 <todo>
-
   <!-- layout -->
   <h1>{ props.title }</h1>
 
@@ -34,10 +33,6 @@ Riot brings custom elements to all modern browsers without the use of any polyfi
   <style>
     :host {
       padding: 16px;
-    }
-
-    h1 {
-      font-size: 14px;
     }
   </style>
 
@@ -69,7 +64,6 @@ Custom tags let you build complex views with HTML. Your application might look s
 
 ``` html
 <body>
-
   <h1>Acme community</h1>
 
   <forum-header/>
@@ -125,7 +119,7 @@ One of the design goals was to introduce a powerful tag syntax with as little bo
 - No brain overhead for attributes like `className`, `htmlFor`...
 - Shortcut spread operator for multiple attributes: `<p ...{ attributes }></p>`
 - Expressions Interpolation: `Add #{ items.length + 1 }` or `class="item { activeClass }"`
-- Modules `export default` for the tags interfaces
+- `export default` statement for the tags interfaces
 - Automatic CSS styling via `<style>` tag without shadow DOM hassles
 
 

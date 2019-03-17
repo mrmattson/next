@@ -12,7 +12,7 @@ body {
 h1 {
   font-size: ms(5);
   line-height: 1.2;
-  margin-top: 2.4rem;
+  margin-top: 3.2rem;
   margin-bottom: 3.2rem;
 
   @include mq($until: 'mobile') {
@@ -23,8 +23,8 @@ h1 {
 h2 {
   font-size: ms(3.2);
   line-height: 1.2;
-  margin-top: 2.4rem;
-  margin-bottom: 1.2rem;
+  margin-top: 2.8rem;
+  margin-bottom: 2.8rem;
 
   @include mq($until: 'mobile') {
     font-size: ms(2);
@@ -34,8 +34,8 @@ h2 {
 h3 {
   font-size: ms(2);
   line-height: 1;
-  margin-top: 1.8rem;
-  margin-bottom: 1.2rem;
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
 
   @include mq($until: 'mobile') {
     font-size: ms(1.6);
@@ -45,6 +45,7 @@ h3 {
 h4 {
   font-size: ms(1.6);
   line-height: 1;
+  margin-top: 1.2rem;
   margin-bottom: 1.2rem;
 
   @include mq($until: 'mobile') {
@@ -55,6 +56,7 @@ h4 {
 h5 {
   font-size: ms(1.2);
   line-height: 1;
+  margin-top: 0.6rem;
   margin-bottom: 0.6rem;
 
   @include mq($until: 'mobile') {
@@ -65,6 +67,7 @@ h5 {
 h6 {
   font-size: ms(0.8);
   line-height: 1.2;
+  margin-top: 0.8rem;
   margin-bottom: 0.6rem;
 
   @include mq($until: 'mobile') {
@@ -105,6 +108,15 @@ p, li {
   hyphens: auto;
 }
 
+ul, ol {
+  margin-top: 1.2rem;
+
+  li {
+    margin-bottom: 0.6rem;
+  }
+}
+
+
 a {
   color: $primary;
   text-decoration: none;
@@ -115,12 +127,28 @@ a {
   }
 }
 
+code {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 70%;
+}
+
+li code, p code {
+  padding: .25em .5em;
+  display: inline-block;
+  transform: translate(0, -0.125em);
+  color: #058;
+  background-color: $paper-white;
+  border-radius: 3px;
+}
+
 blockquote {
   font-family: Georgia, serif;
+  font-style: italic;
   background: lighten($paper-white, 3%);
   border-left: 10px solid $paper-white;
   margin: 1.6rem 1rem 3.2rem;
-  padding: 1.6rem 1rem;
+  padding: 3.2rem 1rem;
+  font-size: 1.2em;
   quotes: "\201C""\201D""\2018""\2019";
 
   &::before {
