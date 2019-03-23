@@ -102,7 +102,7 @@ You can specify a pre-processor with `type` attribute. For example:
 </my-component>
 ````
 
-Your component will be compiled with the preprocessor selected only if it was previously [registered before](/compiler#registerpreprocessor). You can also prefix the language with "text/", such as "text/coffee".
+Your component will be compiled with the preprocessor selected only if it was previously [registered before](/compiler#registerpreprocessor).
 
 ## Tag styling
 
@@ -560,7 +560,7 @@ Let's define a parent tag `<account>` and with a nested tag `<subscription>`:
 
 ```html
 <account>
-  <subscription plan={ props.plan } show_details={ true } />
+  <subscription plan={ props.plan } show-details={ true } />
 </account>
 ```
 
@@ -572,17 +572,16 @@ Let's define a parent tag `<account>` and with a nested tag `<subscription>`:
     export default {
       onMounted(props) {
         // Get JS handle to props
-        const plan = props.plan
-        const show_details = props.show_details
+        const {plan, showDetails} = props
       }
     }
   </script>
 </subscription>
 ```
 
-<span class="tag red">important</span> Note how we named the `show_details` attribute using an underscore instead of camel case, which due to browser specification would have been automatically converted to lowercase.
+ Note how we named the `show-details` attribute is written in dash case but it will be converted to camel case inside the `this.props` object.
 
-Then we mount the `account` tag to the page with a `plan` configuration option:
+Then we mount the `account` component to the page with a `plan` configuration object:
 
 ```html
 <body>
@@ -594,9 +593,9 @@ Then we mount the `account` tag to the page with a `plan` configuration option:
 </script>
 ```
 
-Parent tag options are passed with the `riot.mount` method and child tag options are passed on the tag attribute.
+Parent component properties are passed with the `riot.mount` method and child component ones are passed via the tag attribute.
 
-<span class="tag red">important</span> Nested tags are always declared inside a parent custom tag. They are not initialized if they are defined on the page.
+Nested tags should be registered via `riot.register` call or they can be directly imported into the parent component.
 
 ### Nested HTML
 
