@@ -64,18 +64,20 @@ Custom tags let you build complex views with HTML. Your application might look s
 
 ``` html
 <body>
-  <h1>Acme community</h1>
+  <h1>Riot application</h1>
 
-  <forum-header/>
+  <my-header class="js-component"/>
 
-  <div class="content">
-    <forum-threads/>
-    <forum-sidebar/>
-  </div>
+  <main>
+    <my-articles class="js-component"/>
+    <my-sidebar class="js-component"/>
+  </main>
 
-  <forum-footer/>
+  <my-footer class="js-component"/>
 
-  <script>riot.mount('*', { api: forum_api })</script>
+  <script>
+    riot.mount('.js-component',{ store: createApplicationStore() })
+  </script>
 </body>
 ```
 
@@ -85,7 +87,7 @@ Riot tags are [converted](/compiler/) to pure javascript before browsers can exe
 
 
 #### DOM Expressions binding
-- Absolutely the smallest possible amount of DOM updates and reflows
+- Absolutely the smallest possible amount of DOM updates
 - One way data flow: updates and unmounts are propagated downwards from parent to children
 - Expressions are pre-compiled and cached for high performance
 - Lifecycle events for more control
@@ -104,23 +106,23 @@ Riot tags are [converted](/compiler/) to pure javascript before browsers can exe
 #### Tooling friendly
 - Integrate NPM ecosystem
 - Node.js [require hooks](https://github.com/riot/ssr#usage)
-- Develop with [webpack](https://github.com/riot/webpack-loader), [rollup](https://github.com/riot/rollup-plugin-riot) or [Browserify](https://github.com/riot/riotify) plugins
+- Develop with [webpack](https://github.com/riot/webpack-loader), [rollup](https://github.com/riot/rollup-plugin-riot), [parcel](https://github.com/riot/parcel-plugin-riot) or [Browserify](https://github.com/riot/riotify) plugins
 
 
 ## 2. Simple and minimalistic
 
 Minimalism sets Riot apart from others:
 
-
 ### 1. Enjoyable syntax
 
 One of the design goals was to introduce a powerful tag syntax with as little boilerplate as possible:
 
-- No brain overhead for attributes like `className`, `htmlFor`...
+- No extra brain load for attributes like `className`, `htmlFor`...
 - Shortcut spread operator for multiple attributes: `<p ...{ attributes }></p>`
 - Expressions Interpolation: `Add #{ items.length + 1 }` or `class="item { activeClass }"`
-- `export default` statement for the tags interfaces
-- Automatic CSS styling via `<style>` tag without shadow DOM hassles
+- `export default` statement to define the tags public interfaces
+- functional API over OOP class based syntax
+- Automatic CSS styling via `<style>` tag without shadow DOM hassle
 
 
 ### 2. Small learning curve
@@ -129,10 +131,14 @@ Riot has between 10 and 100 times fewer API methods than other UI libraries.
 
 - Less to learn. Fewer books and tutorials to view
 - Only 3 template directives to learn `if`, `each` and `is`
-- Less proprietary stuff and more standard stuff
+- Less proprietary stuff
+- No Proxies or magic happening under the hood
+- Explicit behaviors over implicit assumptions
 
 
 ### 3. Tiny size
+
+{% include libraries_comparison.html %}
 
 - Only 6kb!
 - Fewer bugs
@@ -153,7 +159,7 @@ Riot is an "open stack". It's meant for developers who want to avoid framework s
 
 ## Conclusion
 
-Riot is Web Components for everyone. Think React + Polymer but without the bloat. It's intuitive to use and it weighs almost nothing. And it works today. No reinventing the wheel, but rather taking the good parts of what's there and making the simplest tool possible.
+Riot is Web Components for everyone. Think React + Polymer but without the bloat. Its API is heavily inspired by Vue.js but instead it contains just the bare minimum to build a modern frontend project. It's intuitive to use and it weighs almost nothing. And it works today. No reinventing the wheel, but rather taking the good parts of what's there and making the simplest tool possible.
 
 We should focus on reusable components instead of templates. According to the developers of React:
 

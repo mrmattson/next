@@ -1,0 +1,46 @@
+.libraries-comparison {
+  @mixin bar() {
+    &::-webkit-progress-value {
+      @content;
+    }
+
+    &::-moz-progress-bar {
+      @content;
+    }
+
+    &::-webkit-progress-bar {
+      background: $paper-white;
+    }
+  }
+
+  progress {
+    width: 100%;
+    height: 4px;
+    border: none;
+    color: $primary;
+
+    &[value] {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+
+    @include bar() {
+      background: $primary;
+      border-radius: 2px;
+    }
+
+    &.riot {
+      color: $green;
+
+      @include bar() {
+        background: $green;
+      }
+    }
+  }
+
+  ol {
+    list-style: none;
+    padding: 0;
+  }
+}

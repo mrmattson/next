@@ -1,0 +1,16 @@
+riot:
+  # http://img.badgesize.io/https://unpkg.com/riot/riot/riot.min.js?compression=gzip
+  size: 6
+
+vue:
+  # http://img.badgesize.io/https://unpkg.com/vue/dist/vue.min.js?compression=gzip
+  size: 34
+
+react:
+  size: 38.43
+
+angular:
+  size: 42.70
+
+polymer:
+  size: 47.72

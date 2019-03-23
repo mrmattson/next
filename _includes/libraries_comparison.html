@@ -1,0 +1,24 @@
+<aside class="libraries-comparison">
+  <ol>
+    <li>
+      <small><em>polymer</em> – {{ site.data.libraries.polymer.size }}KB (gzip)</small>
+  <progress value="100" max="100"></progress>
+    </li>
+    <li>
+      <small><em>angular</em> – {{ site.data.libraries.angular.size }}KB (gzip)</small>
+  <progress value="{{ site.data.libraries.angular.size | divided_by: site.data.libraries.polymer.size | times: 100 }}" max="100"></progress>
+    </li>
+    <li>
+      <small><em>react.min.js</em> – {{ site.data.libraries.react.size }}KB (gzip)</small>
+  <progress max="100" value="{{ site.data.libraries.react.size | divided_by: site.data.libraries.polymer.size | times: 100 }}"></progress>
+    </li>
+    <li>
+        <small><em>vue.min.js</em> – {{ site.data.libraries.vue.size }}KB (gzip)</small>
+  <progress max="100" value="{{ site.data.libraries.vue.size | divided_by: site.data.libraries.polymer.size | times: 100 }}"></progress>
+    </li>
+    <li>
+      <small><em>riot.min.js</em> – {{ site.data.libraries.riot.size }}KB (gzip)</small>
+      <progress class="riot" max="100" value="{{ site.data.libraries.riot.size | divided_by: site.data.libraries.polymer.size | times: 100 }}"></progress>
+    </li>
+  </ol>
+</aside>

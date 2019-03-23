@@ -10,10 +10,10 @@ description: Questions and Answers about Riot, User Interface (UI) Micro-Libary
 Riot is against the current trend of boilerplate and unneeded complexity. We think that a small, powerful API and concise syntax are extremely important things on a client-side library.
 
 ### Is Riot free?
-Riot is free, open source and licensed under the MIT License. There are no [Additional Grant of Patent Rights](https://github.com/facebook/react/blob/master/PATENTS).
+Riot is free, open source and licensed under the MIT License.
 
 ### Can I use Riot in production?
-Absolutely. It's a mature framework [embraced daily](https://twitter.com/search?q=riotjs).
+Absolutely. The project is enough mature.
 
 ### Which browsers are supported?
 
@@ -33,5 +33,5 @@ It's not evil, it just looks "old". To have JS and HTML under the same module is
 
 ### Any future plans?
 
-Sure. We mostly focus on [stability and performance](https://github.com/riot/riot/issues) and try to provide more [examples](https://github.com/riot/examples).
+Sure. The Riot core doesn't provide much out of the box but the `riot.install` method allows us plugging in new features. A bunch of Riot plugins to enhance the default components API is on my TODO list.
 
