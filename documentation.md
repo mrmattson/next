@@ -688,21 +688,17 @@ All the event handlers are auto-bound and `this` refers to the current component
 
 ## Conditionals
 
-Conditionals let you show / hide elements based on a condition. For example:
+Conditionals let you mount / unmount dom and components based on a condition. For example:
 
 ```html
-<div if={ is_premium }>
+<div if={ isPremium }>
   <p>This is for premium users only</p>
 </div>
 ```
 
-Again, the expression can be just a simple property or a full javascript expression. The following special attributes are available:
-
-- `show` – show the element using `style="display: ''"` when the value is true
-- `hide` – hide the element using `style="display: none"` when the value is true
-- `if` – add (true value) or remove (false value) the element from the document
-
-The equality operator is `==` and not `===`. For example: `'a string' == true`.
+Again, the expression can be just a simple property or a full javascript expression. The `if` directive is a special attribute:
+  - `true or (truthy)`: mount a nested component or add an element to the template
+  - `false or (falsy)`: unmount an element or a component
 
 ## Loops
 
