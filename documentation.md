@@ -670,10 +670,14 @@ A function that deals with DOM events is called an "event handler". Event handle
 
   </form>
 
-  // this method is called when above form is submitted
-  submit(e) {
+  <script>
+    export default {
+      // this method is called when above form is submitted
+      submit(e) {
 
-  }
+      }
+    }
+  </script>
 </login>
 ```
 
@@ -685,6 +689,28 @@ Attributes beginning with "on" (`onclick`, `onsubmit`, `oninput` etc...) accept 
 ```
 
 All the event handlers are auto-bound and `this` refers to the current component instance.
+
+Event handlers do not update components so you might combine them with a `this.update()` call:
+
+```html
+<login>
+  <input value={ state.val }/>
+  <button onclick={ resetValue }>Reset</button>
+
+  <script>
+    export default {
+      state: {
+        val: 'initial value'
+      },
+      resetValue() {
+        this.update({
+          val: ''
+        })
+      }
+    }
+  </script>
+</login>
+```
 
 ## Conditionals
 
