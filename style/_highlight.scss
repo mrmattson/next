@@ -33,7 +33,7 @@ $traceback:         #9c6;
   margin-bottom: 1rem;
   line-height: 1.4;
   background-color: #f9f9f9;
-  border-radius: .25rem;
+  border-radius: $border-radius;
   overflow-x: auto;
   display: flex;
 }

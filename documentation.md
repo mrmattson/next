@@ -520,7 +520,7 @@ Riot expressions can only render text values without HTML formatting. However yo
   <script>
     export default {
       setInnerHTML() {
-        this.root.innerHTML = props.content
+        this.root.innerHTML = props.html
       }
       onMounted() {
         this.setInnerHTML()
@@ -537,12 +537,12 @@ After the tag is defined you can use it inside other tags. For example
 
 ```html
 <my-component>
-  <p>Here is some raw content: <raw content={ html }/> </p>
+  <p>Here is some raw content: <raw html={ content }/> </p>
 
   <script>
     export default {
       onBeforeMount() {
-        this.html = 'Hello, <strong>world!</strong>'
+        this.content = 'Hello, <strong>world!</strong>'
       }
     }
   </script>
@@ -551,7 +551,7 @@ After the tag is defined you can use it inside other tags. For example
 
 [demo on jsfiddle](http://jsfiddle.net/23g73yvx/)
 
-<strong>warning: this could expose the user to XSS attacks so make sure you never load data from an untrusted source.</strong>
+<aside class="note note--warning">:warning: this could expose the user to XSS attacks so make sure you never load data from an untrusted source.</aside>
 
 ## Nested tags
 
@@ -579,7 +579,9 @@ Let's define a parent tag `<account>` and with a nested tag `<subscription>`:
 </subscription>
 ```
 
- Note how we named the `show-details` attribute is written in dash case but it will be converted to camel case inside the `this.props` object.
+<aside class="note note--info">
+Note how we named the <code>show-details</code> attribute, it is written in dash case but it will be converted to camel case inside the <code>this.props</code> object.
+</aside>
 
 Then we mount the `account` component to the page with a `plan` configuration object:
 
@@ -595,100 +597,67 @@ Then we mount the `account` component to the page with a `plan` configuration ob
 
 Parent component properties are passed with the `riot.mount` method and child component ones are passed via the tag attribute.
 
-Nested tags should be registered via `riot.register` call or they can be directly imported into the parent component.
-
-### Nested HTML
-
-"HTML transclusion" is a way to process the inner HTML on the page. This is achieved with a build-in `<yield>` tag. Example:
-
-
-### Tag definition
+Nested tags should be registered via `riot.register` call or they can be directly imported into the parent component. If you bundle your application your `<account>` template might look like this:
 
 ```html
-<my-component>
-  <p>Hello <yield/></p>
-  this.text = 'world'
-</my-component>
+<account>
+  <subscription/>
+
+  <script>
+    import Subscription from './subscription.riot'
+
+    export default {
+      components: {
+        Subscription
+      }
+    }
+  </script>
+</account>
 ```
 
-### Usage
+### Slots
 
-Custom tag is placed on a page with nested HTML
+Using the `<slot>` tag you can inject custom HTML templates in a child component from its parent
+
+Child component definition
 
 ```html
-<my-component>
-  <b>{ text }</b>
-</my-component>
+<greeting>
+  <p>Hello <slot/></p>
+</greeting>
 ```
 
-### Result
+The child component is placed in a parent component injecting custom HTML into it
 
 ```html
-<my-component>
-  <p>Hello <b>world</b><p>
-</my-component>
+<user>
+  <greeting>
+    <b>{ text }</b>
+  </greeting>
+
+  <script>
+    export default {
+      text: 'world'
+    }
+  </script>
+</user>
 ```
 
-See [API docs](/api/#yield) for `yield`.
-
-## Named elements
-
-Elements with `ref` attribute are automatically linked to the context under `this.refs` so you'll have an easy access to them with javascript:
+Result
 
 ```html
-<login>
-  <form ref="login" onsubmit={ submit }>
-    <input ref="username">
-    <input ref="password">
-    <button ref="submit">
-  </form>
-
-  // grab above HTML elements
-  submit(e) {
-    var form = this.refs.login,
-        username = this.refs.username.value,
-        password = this.refs.password.value,
-        button = this.refs.submit
-  }
-
-</login>
+<user>
+  <greeting>
+    <p>Hello <b>world</b><p>
+  </greeting>
+</user>
 ```
 
-The refs attribute will be set when the mount event gets fired, so you can access to the `this.refs` collection into 'mount' (`this.on('mount', function() {...}) `) or other event handlers.
+See [API docs](/api/#slots) for `slots`.
 
-<span class="tag red">&gt;=3.0</span>
-
-If the `ref` attribute is applied to a Riot tag, it will reference a [tag instance](/api/#tag-instance), and not the DOM element, as in the case above. For example:
-
-
-```html
-<my-component>
-  <my-nested-tag data-ref="one"></my-nested-tag>
-  <div data-ref="two"></div>
-
-  this.on('mount', function() {
-    console.log(this.refs.one); // Riot tag object
-    console.log(this.refs.two); // HTML DOM element
-  });
-</my-component>
-
-```
-
-In cases where the same `ref` value is used on multiple elements, the refs property will return an array of the respective elements / tags. For example:
-
-
-```html
-<my-component>
-  <div data-ref="items" id="alpha"></div>
-  <div data-ref="items" id="beta"></div>
-
-  this.on('mount', function() {
-    console.log(this.refs.items); // [div#alpha, div#beta]
-  });
-</my-component>
-
-```
-
+<aside class="note note--info">
+Slots work only in compiled components, all the inner HTML of the components placed directly in your page DOM will be ignored.
+</aside>
 
 
 ## Event handlers
@@ -715,17 +684,7 @@ Attributes beginning with "on" (`onclick`, `onsubmit`, `oninput` etc...) accept 
 <form onsubmit={ condition ? method_a : method_b }>
 ```
 
-In the function `this` refers to the current tag instance. After the handler is called `this.update()` is automatically called reflecting all the possible changes to the UI (unless you set `event.preventUpdate` in the handler).
-
-### Event object
-
-The event handler receives the standard event object as the first argument. The following properties are normalized to work across browsers:
-
-- `e.currentTarget` points to the element where the event handler is specified.
-- `e.target` is the originating element. This is not necessarily the same as `currentTarget`.
-- `e.which` is the key code in a keyboard event (`keypress`, `keyup`, etc...).
-- `e.item` is the current element in a loop. See [loops](#loops) for more details.
-
+All the event handlers are auto-bound and `this` refers to the current component instance.
 
 ## Conditionals
 
