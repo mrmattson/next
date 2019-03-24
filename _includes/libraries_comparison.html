@@ -9,16 +9,20 @@
   <progress value="{{ site.data.libraries.angular.size | divided_by: site.data.libraries.polymer.size | times: 100 }}" max="100"></progress>
     </li>
     <li>
-      <small><em>react.min.js</em> – {{ site.data.libraries.react.size }}KB (gzip)</small>
+      <small><em>react</em> – {{ site.data.libraries.react.size }}KB (gzip)</small>
   <progress max="100" value="{{ site.data.libraries.react.size | divided_by: site.data.libraries.polymer.size | times: 100 }}"></progress>
     </li>
     <li>
-        <small><em>vue.min.js</em> – {{ site.data.libraries.vue.size }}KB (gzip)</small>
+        <small><em>vue</em> – {{ site.data.libraries.vue.size }}KB (gzip)</small>
   <progress max="100" value="{{ site.data.libraries.vue.size | divided_by: site.data.libraries.polymer.size | times: 100 }}"></progress>
     </li>
     <li>
-      <small><em>riot.min.js</em> – {{ site.data.libraries.riot.size }}KB (gzip)</small>
+      <small><em>riot</em> – {{ site.data.libraries.riot.size }}KB (gzip)</small>
       <progress class="riot" max="100" value="{{ site.data.libraries.riot.size | divided_by: site.data.libraries.polymer.size | times: 100 }}"></progress>
+    </li>
+    <li>
+      <small><em>preact</em> – {{ site.data.libraries.preact.size }}KB (gzip)</small>
+      <progress class="preact" max="100" value="{{ site.data.libraries.preact.size | divided_by: site.data.libraries.polymer.size | times: 100 }}"></progress>
     </li>
   </ol>
 </aside>

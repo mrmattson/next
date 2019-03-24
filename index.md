@@ -1,7 +1,7 @@
 ---
 layout: home
 title: Riot.js — Simple and elegant component-based UI library
-description: Riot lets you build user interfaces with custom tags using simple and enjoyable syntax.
+description: Riot.js lets you build user interfaces with custom tags using simple and enjoyable syntax.
 ---
 
 ## Why do we need a new UI library?
@@ -13,7 +13,7 @@ So — here's why we need one:
 
 ### 1. Custom elements
 
-Riot brings custom elements to all modern browsers without the use of any polyfill!
+Riot.js brings custom elements to all modern browsers without the use of any polyfill!
 
 ``` html
 <todo>
@@ -64,7 +64,7 @@ Custom tags let you build complex views with HTML. Your application might look s
 
 ``` html
 <body>
-  <h1>Riot application</h1>
+  <h1>Riot.js application</h1>
 
   <my-header class="js-component"/>
 
@@ -76,14 +76,14 @@ Custom tags let you build complex views with HTML. Your application might look s
   <my-footer class="js-component"/>
 
   <script>
-    riot.mount('.js-component',{ store: createApplicationStore() })
+    riot.mount('.js-component', { store: createApplicationStore() })
   </script>
 </body>
 ```
 
 HTML syntax is the *de facto* language of the web and it's designed for building user interfaces. The syntax is explicit, nesting is inherent to the language, and attributes offer a clean way to provide options for custom tags.
 
-Riot tags are [converted](/compiler/) to pure javascript before browsers can execute them.
+Riot.js tags are [compiled](/compiler/) to pure javascript before browsers can execute them.
 
 
 #### DOM Expressions binding
@@ -111,7 +111,7 @@ Riot tags are [converted](/compiler/) to pure javascript before browsers can exe
 
 ## 2. Simple and minimalistic
 
-Minimalism sets Riot apart from others:
+Minimalism sets Riot.js apart from others:
 
 ### 1. Enjoyable syntax
 
@@ -127,7 +127,7 @@ One of the design goals was to introduce a powerful tag syntax with as little bo
 
 ### 2. Small learning curve
 
-Riot has between 10 and 100 times fewer API methods than other UI libraries.
+Riot.js has between 10 and 100 times fewer API methods than other UI libraries.
 
 - Less to learn. Fewer books and tutorials to view
 - Only 3 template directives to learn `if`, `each` and `is`
@@ -149,20 +149,36 @@ Riot has between 10 and 100 times fewer API methods than other UI libraries.
 
 ### 4. Small, but complete
 
-Riot has all the essential building blocks for modern client-side applications:
+Riot.js has all the essential building blocks for modern client-side applications:
 
 - "Reactive" views for building user interfaces
 - High performance also with many DOM nodes
 - No Side Effects
 
-Riot is an "open stack". It's meant for developers who want to avoid framework specific idioms. The generic tools let you mix and match design patterns.
+Riot.js is an "open stack". It's meant for developers who want to avoid framework specific idioms. The generic tools let you mix and match design patterns.
 
 ## Conclusion
 
-Riot is Web Components for everyone. Think React + Polymer but without the bloat. Its API is heavily inspired by Vue.js but instead it contains just the bare minimum to build a modern frontend project. It's intuitive to use and it weighs almost nothing. And it works today. No reinventing the wheel, but rather taking the good parts of what's there and making the simplest tool possible.
+Riot.js is Web Components for everyone. Think React + Polymer but without the bloat. Its API is heavily inspired by Vue.js but it contains instead just the bare minimum to build a modern frontend project. It's intuitive to use and it weighs almost nothing. And it works today. No reinventing the wheel, but rather taking the good parts of what's there and making the simplest tool possible.
 
-We should focus on reusable components instead of templates. According to the developers of React:
+Riot.js design was driven by [*The Zen of Python, by Tim Peters*](https://en.wikipedia.org/wiki/Zen_of_Python) philosophy, it's our mantra:
 
-> Templates separate technologies, not concerns.
-
-By having related layout and logic together under the same component the overall system becomes cleaner. We respect React for this important insight.
+> Beautiful is better than ugly.<br/>
+> Explicit is better than implicit.<br/>
+> Simple is better than complex.<br/>
+> Complex is better than complicated.<br/>
+> Flat is better than nested.<br/>
+> Sparse is better than dense.<br/>
+> Readability counts.<br/>
+> Special cases aren't special enough to break the rules.<br/>
+> Although practicality beats purity.<br/>
+> Errors should never pass silently.<br/>
+> Unless explicitly silenced.<br/>
+> In the face of ambiguity, refuse the temptation to guess.<br/>
+> There should be one-- and preferably only one --obvious way to do it.<br/>
+> Although that way may not be obvious at first unless you're Dutch.<br/>
+> Now is better than never.<br/>
+> Although never is often better than *right* now.<br/>
+> If the implementation is hard to explain, it's a bad idea.<br/>
+> If the implementation is easy to explain, it may be a good idea.<br/>
+> Namespaces are one honking great idea -- let's do more of those!
