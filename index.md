@@ -121,6 +121,7 @@ One of the design goals was to introduce a powerful tag syntax with as little bo
 - Shortcut spread operator for multiple attributes: `<p ...{ attributes }></p>`
 - Expressions Interpolation: `Add #{ items.length + 1 }` or `class="item { activeClass }"`
 - `export default` statement to define the tags public interfaces
+- No side effects due to asynchronous rendering or `Proxy` objects
 - functional API over OOP class based syntax
 - Automatic CSS styling via `<style>` tag without shadow DOM hassle
 
@@ -153,15 +154,15 @@ Riot.js has all the essential building blocks for modern client-side application
 
 - "Reactive" views for building user interfaces
 - High performance also with many DOM nodes
-- No Side Effects
+- Highly extensible and not opinionated
 
-Riot.js is an "open stack". It's meant for developers who want to avoid framework specific idioms. The generic tools let you mix and match design patterns.
+Riot.js is an "open stack". It's meant for developers who want to avoid framework specific idioms. The generic tools let you mix and match design patterns you prefer most.
 
 ## Conclusion
 
 Riot.js is Web Components for everyone. Think React + Polymer but without the bloat. Its API is heavily inspired by Vue.js but it contains instead just the bare minimum to build a modern frontend project. It's intuitive to use and it weighs almost nothing. And it works today. No reinventing the wheel, but rather taking the good parts of what's there and making the simplest tool possible.
 
-Riot.js design was driven by [*The Zen of Python, by Tim Peters*](https://en.wikipedia.org/wiki/Zen_of_Python) philosophy, it's our mantra:
+The Riot.js design was driven by [*The Zen of Python, by Tim Peters*](https://en.wikipedia.org/wiki/Zen_of_Python) philosophy, that's our mantra:
 
 > Beautiful is better than ugly.<br/>
 > Explicit is better than implicit.<br/>
