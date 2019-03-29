@@ -7,7 +7,7 @@ description: Questions and Answers about Riot, User Interface (UI) Micro-Libary
 ## Frequently asked questions
 
 ### Why is this project called Riot?
-Riot is against the current trend of boilerplate and unneeded complexity. We think that a small, powerful API and concise syntax are extremely important things on a client-side library.
+Riot is against the current trend of boilerplate and unneeded complexity. We think that a small, powerful API and concise syntax are extremely important things on a client-side library. Riot provides also an un-opinionated stack that gives developers the freedom to work with the best technology they like.
 
 ### Is Riot free?
 Riot is free, open source and licensed under the MIT License.

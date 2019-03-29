@@ -74,7 +74,7 @@ Custom components are [compiled](/compiler/) to javascript.
 See the [live demo](https://riot.js.org/examples/plunker/?app=todo-app), browse the [sources](https://github.com/riot/examples/tree/gh-pages/todo-app), or download the [zip](https://github.com/riot/examples/archive/gh-pages.zip).
 
 
-## Component syntax
+## Syntax
 
 A Riot component is a combination of layout (HTML) and logic (javascript). Here are the basic rules:
 
@@ -104,7 +104,7 @@ You can specify a pre-processor with `type` attribute. For example:
 
 Your component will be compiled with the preprocessor selected only if it was previously [registered before](/compiler#registerpreprocessor).
 
-## Tag styling
+## Styling
 
 You can put a `style` tag inside. Riot.js automatically takes it out and injects it into `<head>`. This happens once, no matter how many times the component is initialized.
 
@@ -553,7 +553,7 @@ After the tag is defined you can use it inside other tags. For example
 
 <aside class="note note--warning">:warning: this could expose the user to XSS attacks so make sure you never load data from an untrusted source.</aside>
 
-## Nested tags
+## Nested components
 
 Let's define a parent tag `<account>` and with a nested tag `<subscription>`:
 
@@ -659,6 +659,10 @@ See [API docs](/api/#slots) for `slots`.
 Slots work only in compiled components, all the inner HTML of the components placed directly in your page DOM will be ignored.
 </aside>
 
+<aside class="note note--warning">
+:warning: Riot <code>if</code>, <code>each</code> and <code>is</code> directives are not supported on slot tags
+</aside>
+
 
 ## Event handlers
 
@@ -733,170 +737,134 @@ Loops are implemented with `each` attribute as follows:
 ```html
 <my-component>
   <ul>
-    <li each={ items } class={ completed: done }>
-      <input type="checkbox" checked={ done }> { title }
+    <li each={ item in items } class={ item.completed ? 'done' : null }>
+      <input type="checkbox" checked={ item.done }> { item.title }
     </li>
   </ul>
 
-  this.items = [
-    { title: 'First item', done: true },
-    { title: 'Second item' },
-    { title: 'Third item' }
-  ]
+  <script>
+    export default {
+      items: [
+        { title: 'First item', done: true },
+        { title: 'Second item' },
+        { title: 'Third item' }
+      ]
+    }
+  </script>
 </my-component>
 ```
 
 The element with the `each` attribute will be repeated for all items in the array. New elements are automatically added / created when the items array is manipulated using `push()`, `slice()` or `splice` methods for example.
 
-### Context
+### Looping custom components
 
-A new context is created for each item. These are [tag instances](/api/#tag-instance). When loops are nested, all the children tags in the loop inherit any of their parent loop's properties and methods they themselves have `undefined`. In this way, Riot avoids overriding things that should not be overridden by the parent tag.
-
-The parent can be explicitly accessed through the `parent` variable. For example:
-
+Custom components can also be looped. For example:
 
 ```html
-<my-component>
-  <div each={ items }>
-    <h3>{ title }</h3>
-    <a onclick={ parent.remove }>Remove</a>
-  </div>
-
-  this.items = [ { title: 'First' }, { title: 'Second' } ]
-
-  remove(event) {
-
-  }
-</my-component>
+<todo-item each="{ item in items }" ...{ item }></todo-item>
 ```
 
-In the looped element everything but the `each` attribute belongs to the child context, so the `title` can be accessed directly and `remove` needs to be prefixed with `parent.` since the method is not a property of the looped item.
-
-The looped items are [tag instances](/api/#tag-instance). Riot does not touch the original items so no new properties are added to them.
-
-
-### Event handlers with looped items
-
-Event handlers can access individual items in a collection with `event.item`. Now let's implement the `remove` function:
-
-```html
-<my-component>
-  <div each={ items }>
-    <h3>{ title }</h3>
-    <a onclick={ parent.remove }>Remove</a>
-  </div>
-
-  this.items = [ { title: 'First' }, { title: 'Second' } ]
-
-  remove(event) {
-
-    // looped item
-    var item = event.item
-
-    // index on the collection
-    var index = this.items.indexOf(item)
-
-    // remove from collection
-    this.items.splice(index, 1)
-  }
-</my-component>
-```
-
-After the event handler is executed the current tag instance is updated using `this.update()` (unless you set e.preventUpdate to true in your event handler) which causes all the looped items to execute as well. The parent notices that an item has been removed from the collection and removes the corresponding DOM node from the document.
-
-
-### Looping custom tags
-
-Custom tags can also be looped. For example:
-
-```html
-<todo-item each="{ items }" data="{ this }"></todo-item>
-```
-
-The currently looped item can be referenced with `this` which you can use to pass the item as an option to the looped tag.
+The currently looped item properties can directly be passed to the looped tag.
 
 
 ### Non-object arrays
 
-The array elements need not be objects. They can be strings or numbers as well. In this case you need to use the `{ name, i in items }` construct as follows:
+The each directive uses internally `Array.from`. This means that you can loop strings, Map, Sets containing also only primitive values:
 
 
 ```html
 <my-component>
-  <p each="{ name, i in arr }">{ i }: { name }</p>
+  <p each={ (name, index) in stuff }">{ index }: { name }</p>
 
-  this.arr = [ true, 110, Math.random(), 'fourth']
+  <p each={ letter in letters }>{ letter }</p>
+
+  <p each={ meal in food }>{ meal }</p>
+
+  <script>
+    export default {
+      stuff: [ true, 110, Math.random(), 'fourth'],
+      food: new Map().set('pasta', 'spaghetti').set('pizza', 'margherita'),
+      letters: 'hello'
+    }
+  </script>
 </my-component>
 ```
 
-The `name` is the name of the element and `i` is the index number. Both of these labels can be anything that's best suited for the situation.
+The `name` is the name of the element and `index` is the index number. Both of these labels can be anything that's best suited for the situation.
 
 
 ### Object loops
 
-Plain objects can also be looped. For example:
+Plain objects can be looped via [`Object.entries`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries). For example:
 
 ```html
 <my-component>
-  <p each="{ value, name  in obj }">{ name } = { value }</p>
+  <p each={ element in Object.entries(obj) }>
+    key = { element[0] }
+    value = { element[1] }
+  </p>
 
-  this.obj = {
-    key1: 'value1',
-    key2: 1110.8900,
-    key3: Math.random()
-  }
+  <script>
+    export default {
+      obj: {
+        key1: 'value1',
+        key2: 1110.8900,
+        key3: Math.random()
+      }
+    }
+  </script>
+
 </my-component>
 ```
 
-Object loops are not recommended since internally Riot detects changes on the object with `JSON.stringify`. The *whole* object is studied and when there is a change the whole loop is re-rendered. This can be slow. Normal arrays are much faster and only the changes are drawn on the page.
+You can use [`Object.keys`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys) and [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values) if you just want to loop only fragments your object.
 
+```html
+<my-component>
+  <p>
+    The Event will start at:
+    <time each={ value in Object.values(aDate) }>{ value }</time>
+  </p>
+
+  <script>
+    export default {
+      aDate: {
+        hour: '10:00',
+        day: '22',
+        month: 'December',
+        year: '2050'
+      }
+    }
+  </script>
+
+</my-component>
+```
 
 ### Loops advanced tips
 
-#### Performances
-
-The default `each` directive algorithm will sync the position of the looped DOM nodes together with the items in your collection via `indexOf` lookup. This strategy might be not efficient in case you are dealing with big collections of data. In that case if your looped tags don't need to be reordered but just update their templates you can add the `no-reorder` options to them.
-
-```html
-<loop>
-  <!-- `items` here might be a huge collection of data... -->
-  <table>
-    <tr each="{ item in items }" no-reorder>
-      <td>
-        { item.name }
-      </td>
-      <td>
-        { item.surname }
-      </td>
-    </tr>
-  </table>
-</loop>
-```
-
-The table rows in the above example will be added/removed/updated without being reordered following the item position initially bound to them.
-
 #### Key
 
-<span class="tag red">&gt;= v3.7</span>
-
-Adding the `key` attribute to the looped tags you will provide a more precise strategy to track your items position. This will improve massively the loop performance in case your collections are immutable.
+Adding the `key` attribute to the looped tags you will provide a more precise strategy to track your items position. This will highly improve the loop performance in case your collections are immutable.
 
 ```html
 <loop>
   <ul>
-    <li each={ user in users } key="id">{ user.name }</li>
+    <li each={ user in users } key={ user.id }>{ user.name }</li>
   </ul>
   <script>
-    this.users = [
-      { name: 'Gian', id: 0 },
-      { name: 'Dan', id: 1 },
-      { name: 'Teo', id: 2 }
-    ]
+    export default {
+      users: [
+        { name: 'Gian', id: 0 },
+        { name: 'Dan', id: 1 },
+        { name: 'Teo', id: 2 }
+      ]
+    }
+
   </script>
 </loop>
 ```
 
-The `key` attribute can be generated also via expressions
+The `key` attribute can be also generated in runtime via expressions
 
 ```html
 <loop>
@@ -904,45 +872,26 @@ The `key` attribute can be generated also via expressions
     <li each={ user in users } key={ user.id() }>{ user.name }</li>
   </ul>
   <script>
-    this.users = [
-      { name: 'Gian', id() { return 0 } },
-      { name: 'Dan', id() { return 1 } },
-      { name: 'Teo', id() { return 2 } }
-    ]
+    export default {
+      users: [
+        { name: 'Gian', id() { return 0 } },
+        { name: 'Dan', id() { return 1 } },
+        { name: 'Teo', id() { return 2 } }
+      ]
+    }
   </script>
 </loop>
 ```
 
-#### The `virtual` tag
+## HTML elements as components
 
-In some cases you may need to loop some html without having a particular wrapper tag. In that case you can use the `<virtual>` tag that will be removed rendering just the html tags wrapped in it. For example:
-
-```html
-<dl>
-  <virtual each={item in items}>
-    <dt>{item.key}</dt>
-    <dd>{item.value}</dd>
-  </virtual>
-</dl>
-```
-
-`virtual` however is not exclusive to looping and can be used in conjuction with `if` for any tag
+Standard HTML elements can be used as riot components in the page body with the addition of the `is` attribute.
 
 ```html
-<virtual data-is="my-tag" if={condition}>
-  <p>Show me with no wrapper on condition</p>
-</virtual>
+<ul is="my-list"></ul>
 ```
 
-## HTML elements as tags
-
-Standard HTML elements can be used as riot tags in the page body with the addition of the `data-is` attribute.
-
-```html
-<ul data-is="my-list"></ul>
-```
-
-This provides users with an alternative that can provide greater compatibility with css frameworks.  The tags are treated like any other custom tag.
+This provides users with an alternative that can provide greater compatibility with css frameworks. The tags are treated like any other custom component.
 
 ```js
 riot.mount('my-list')
@@ -950,24 +899,26 @@ riot.mount('my-list')
 
 will mount the `ul` element shown above as if it were `<my-list></my-list>`
 
-Note that you can use also an expression in the `data-is` attribute and riot will be able to
+Note that you can use also an expression in the `is` attribute and riot will be able to
 render dynamically also different tags on the same DOM node
 
 ```html
 <my-component>
   <!-- dynamic component -->
-  <div data-is={ component }></div>
+  <div is={ animal }></div>
   <button onclick={ switchComponent }>
     Switch
   </button>
 
   <script>
-    this.component = 'foo'
-
-    switchComponent() {
-      // riot will render the <bar> component
-      // replacing <foo>
-      this.component = 'bar'
+    export default {
+      animal: 'dog',
+      switchComponent() {
+        // riot will render the <dog> component
+        // replacing <cat>
+        this.animal = 'cat'
+        this.update()
+      }
     }
   </script>
 </my-component>
@@ -976,31 +927,31 @@ render dynamically also different tags on the same DOM node
 Note that when using the `data-is` attribute, the tag name should be rendered in all lowercase, regardless of how it's defined.
 
 ```html
-  <MyTag></MyTag> <!-- Correct -->
-  <div data-is="mytag"></div> <!-- Also Correct -->
-  <div data-is="MyTag"></div> <!-- Incorrect -->
-  <script type="text/javascript">
-    riot.mount('MyTag');
+  <MyComponent></MyComponent> <!-- Correct -->
+  <div is="mycomponent"></div> <!-- Also Correct -->
+  <div is="MyComponent"></div> <!-- Incorrect -->
+  <script>
+    riot.mount('MyComponent');
   </script>
 ```
 
 
 ## Server-side rendering
 
-Riot supports server-side rendering with Node/io.js. You can `require` tags and render them:
+Riot [supports server-side rendering](https://github.com/riot/ssr) with Node.js. You can `require` components and render them:
 
 ```js
-var riot = require('riot')
-var timer = require('timer.tag')
+const render = require('@riotjs/ssr')
+const Timer = require('timer.riot')
 
-var html = riot.render(timer, { start: 42 })
+const html = render('timer', Timer, { start: 42 })
 
 console.log(html) // <timer><p>Seconds Elapsed: 42</p></timer>
 ```
 
 ## Riot DOM Caveats
 
-Riot tags rely on browsers rendering so you must be aware of certain situations where your components might not render properly their template.
+Riot components rely on browsers rendering so you must be aware of certain situations where your components might not render properly their template.
 
 Consider the following tag:
 
@@ -1026,4 +977,4 @@ This markup is not valid if not injected in a `<select>` tag:
 
 ```
 
-Tags like `table, select, svg...` don't allow custom children tags so the use of custom riot tags (`<virtual>` included) is forbidden. Use `data-is` instead like demonstrated above. [more info](https://github.com/riot/riot/issues/2206)
+Tags like `table, select, svg...` don't allow custom children tags so the use of custom riot tags is forbidden. Use `is` instead like demonstrated above. [more info](https://github.com/riot/riot/issues/2206)
