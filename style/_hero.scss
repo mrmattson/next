@@ -40,6 +40,7 @@
       a {
         padding: 0.8rem 1.6rem;
         display: inline-block;
+        font-size: ms(0.4)
       }
 
       @include mq($until: 'mobile') {

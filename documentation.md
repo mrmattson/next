@@ -87,7 +87,7 @@ A Riot component is a combination of layout (HTML) and logic (javascript). Here 
 * Boolean attributes (checked, selected etc..) are ignored when the expression value is falsy: `<input checked={ undefined }>` becomes `<input>`.
 * All attribute names *must be lowercase*. This is due to browser specification.
 * Standard HTML tags (`label`, `table`, `a` etc..) can also be customized, but not necessarily a wise thing to do.
-* Tag definition **root** may also have attributes: `<foo onclick={ click } class={ active: active }>`.
+* Tag definition **root** may also have attributes: `<my-component onclick={ click } class={ props.class }>`.
 
 
 ## Pre-processor
@@ -274,7 +274,7 @@ You can pass initial properties for components in the second argument
 </script>
 ```
 
-The passed data can be anything, ranging from a simple object to a full application API. Or it can be a Flux store. Depends on the designed architecture.
+The passed data can be anything, ranging from a simple object to a full application API. Or it can be a Redux store. Depends on the designed architecture.
 
 Inside the tag the properties can be referenced with the `this.props` attribute as follows:
 

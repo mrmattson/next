@@ -152,7 +152,7 @@ Riot.js has between 10 and 100 times fewer API methods than other UI libraries.
 
 Riot.js has all the essential building blocks for modern client-side applications:
 
-- "Reactive" views for building user interfaces
+- Modular views for building user interfaces
 - High performance also with many DOM nodes
 - Highly extensible and not opinionated
 
