@@ -42,7 +42,7 @@ interface RiotCoreComponent {
   props: object;
   root: HTMLElement;
   mount(element: HTMLElement, initialState?: object, parentScope?: object): RiotComponent;
-  update(newState:object, parentScope?: object): RiotComponent;
+  update(newState?:object, parentScope?: object): RiotComponent;
   unmount(keepRootElement: boolean): RiotComponent;
 
   // Helpers
@@ -200,7 +200,7 @@ You should avoid to store nested javascript objects into the state property beca
 
 #### component.update
 
-`component.update(newState)`
+`component.update(newState?:object, parentScope?: object): RiotComponent;`
 
 Updates the component `state` object triggering the re-rendering of all its expressions. This method can eventually be called every time an event handler is dispatched and the user interacts with the application.
 
