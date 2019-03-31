@@ -68,6 +68,7 @@ Tools like [`webpack`](https://webpack.js.org/) and [`rollup`](https://rollupjs.
 For such tools we provide riot official loaders to let import natively riot components into your source code:
   - [webpack](https://github.com/riot/webpack-loader)
   - [rollup](https://github.com/riot/rollup-plugin-riot).
+  - [parcel](https://github.com/riot/parcel-plugin-riot)
   - [riotify](https://github.com/riot/riotify)
 
 With the riot loaders your application entry script might look like this:

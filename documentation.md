@@ -3,7 +3,68 @@ layout: detail
 title: Documentation
 ---
 
-## Example
+## Basis
+
+### Installation
+
+You can install riot via npm:
+
+```sh
+npm i -S riot
+```
+
+Or via yarn
+
+```sh
+yarn add riot
+```
+
+### Usage
+
+You can bundle your Riot.js application via [webpack](https://github.com/riot/webpack-loader), [rollup](https://github.com/riot/rollup-plugin-riot), [parcel](https://github.com/riot/parcel-plugin-riot) or [browserify](https://github.com/riot/riotify).
+Riot tags can be compiled also in directly [in your browser](compiler/#in-browser-compilation) for quick prototypes or tests.
+
+### Quick Start
+
+Once you have wired all your application bundler that's how your code might look like this:
+
+`index.html`
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Riot App</title>
+</head>
+<body>
+  <app></app>
+  <script src="path/to/your/main.js"></script>
+</body>
+</html>
+```
+
+`app.riot`
+```html
+<app>
+  <p>{ props.message }</p>
+</app>
+```
+
+`main.js`
+
+```js
+import * as riot from 'riot'
+import App from './app.riot'
+
+const mountApp = riot.component(App)
+
+const app = mountApp(
+  document.getElementById('root'),
+  { message: 'Hello World' }
+)
+```
+
+## Todo Example
 
 Riot custom components are the building blocks for user interfaces. They make the "view" part of the application. Let's start with an extended `<todo>` example highlighting various features of Riot:
 
@@ -161,7 +222,7 @@ Once a component is created you can mount it on the page as follows:
 
   <!-- mount the component -->
   <script type="module">
-    // import the component javascript output generated with the riot compiler
+    // import the component javascript output generated via @riotjs/compiler
     import MyComponent from './my-component.js'
 
     // register the riot component
@@ -383,7 +444,7 @@ Any callback receives always the current `this.props` and `this.state` as argume
 Riot provides an easy way to upgrade its components. When a component is created it can be enhanced by the plugins registered via `riot.install`.
 
 ```js
-// riot-uid-plugin.js
+// riot-observable.js
 let id = 0
 
 riot.install(function(component) {

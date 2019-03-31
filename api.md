@@ -5,6 +5,189 @@ class: apidoc
 ---
 
 
+## Core API
+
+### riot.mount
+
+`riot.mount(selector: string, props?: object, componentName?: string): [RiotComponent]`
+
+1. `selector` selects elements from the page and mounts them with a custom components. The selected elements' name must match the custom tag name. DOM nodes having the `is` attribute can also be automounted
+
+2. `props` optional object is passed for the component to consume. This can be anything, ranging from a simple object to a full application API. Or it can be a Flux- store. Really depends on how you want to structure your client-side applications. *Also note* that attributes you set on your tags will take precedence over ones specified with same names via `props` argument.
+
+3. `componentName` optional component name in case the node to mount can't be automounted by riot
+
+<strong>@returns: </strong>an array of the mounted [component objects](#component-object)
+
+
+Examples:
+
+``` js
+// selects and mounts all <pricing> tags on the page
+const components = riot.mount('pricing')
+
+// mount all tags with a class name .customer
+const components = riot.mount('.customer')
+
+// mount <account> tag and pass an API object as options
+const components = riot.mount('account', api)
+
+// mount <div id="root"> tag passing the API object using the previously registered `app` component
+const components = riot.mount('#root', api, 'app')
+```
+
+Note: users of [In-browser compilation](/compiler/#in-browser-compilation) will need to wait the components compilation before calling the `riot.mount` method.
+
+```javascript
+(async function main() {
+  await riot.compile()
+
+  const components = riot.mount('user')
+}())
+```
+
+The `props` argument can be also a function in order to avoid sharing the same object across several tag instances [riot/2613](https://github.com/riot/riot/issues/2613)
+
+``` js
+riot.mount('my-component', () => ({
+  custom: 'option'
+}))
+```
+### riot.unmount
+
+`riot.unmount(selector: string): [HTMLElement]`
+
+1. `selector` selects elements from the page and unmounts them if they were mounted before.
+
+```js
+// Select all the <user> tags and unmount them
+riot.unmount('user')
+```
+
+<strong>@returns: </strong>an array of the mounted [component objects](#component-object)
+
+### riot.component
+
+`riot.component(component: RiotComponentShell): function`
+
+1. `component` - [a component shell object](#component-shell-interface)
+
+<strong>@returns: </strong>a function to create [component objects](#component-object)
+
+The `riot.component` method can be used to create and mount component without registering them globally:
+
+```js
+import * from riot from 'riot'
+import App from './app.riot'
+
+const createApp = riot.component(App)
+
+const app = createApp(document.getElementById('root'), {
+  name: 'This is a custom property'
+})
+```
+
+### riot.install
+
+`riot.install(plugin: function): Set`
+
+1. `plugin` - function receiving [a component objects](#component-object) for any component created
+
+<strong>@returns: </strong> a javascript `Set` containing all the plugin functions installed
+
+Once installed a plugin function will be called for any Riot.js component created
+
+```js
+import { install } from 'riot'
+
+let id = 0
+
+// this plugin adds the uid attribute on any riot component created
+install(function(component) {
+  component.uid = id++
+
+  return component
+})
+```
+
+### riot.uninstall
+
+`riot.uninstall(plugin: function): Set`
+
+1. `plugin` - function plugin already installed before
+
+<strong>@returns: </strong> a javascript `Set` containing all the plugin remaining functions installed
+
+A plugin can be installe and uninstalled:
+
+```js
+import { install, uninstall } from 'riot'
+import uid from './riot-uid.js'
+
+install(uid)
+
+// uninstall the plugin if it's not needed anymore
+uninstall(uid)
+```
+
+### riot.register
+
+`riot.register(name: string, component: RiotComponentShell): Map`
+
+1. `name` - the component name
+2. `component` - [a component shell object](#component-shell-interface)
+
+<strong>@returns: </strong> a javascript `Map` containing all registered components factory functions
+
+```js
+import { register, mount } from 'riot'
+import MyComponet from './my-component.riot'
+
+// register the my-component as global component
+register('my-component', MyComponet)
+
+// find all the DOM nodes called `<my-component>` and
+// mount them with the component previously registered
+mount('my-component')
+```
+
+### riot.unregister
+
+`riot.unregister(name: string)`: Map
+
+1. `name` - the component name
+
+<strong>@returns: </strong> a javascript `Map` containing the remaining registered components factory functions
+
+Unregistering a tag previously created via compiler or via `riot.register()`
+This method could be handy in case you need to test your app and you want to create multiple
+tags using the same name for example
+
+```js
+import { register, unregister } from 'riot'
+import TestComponent from './test-component.riot'
+import TestComponent2 from './test-component2.riot'
+
+// create a test component
+register('test-component', TestComponent)
+
+// mount it
+const [component] = mount(document.createElement('div'), 'test-component')
+expect(component.root.querySelector('p')).to.be.ok
+
+// unregister the tag
+unregister('test-component')
+
+// recreate the same component using a different template
+register('test-component', TestComponent2)
+```
+
+### riot.version
+
+`riot.version(): string`
+
+<strong>@returns: </strong> the current riot version in use as string
+
 ## Component object
 
 Each Riot.js component is created as lightweight object. The object that you export via `export default` will have the following properties:
@@ -22,8 +205,8 @@ Each Riot.js component is created as lightweight object. The object that you exp
 - [Lifecycle callbacks](#lifecycle)
   - `onBeforeMount` - called before the component will be mounted
   - `onMounted` - called after the component has rendered
-  - `onBeforeUpdate` - called before updating the component
-  - `onUpdated` - callend after the component has been updated
+  - `onBeforeUpdate` - called before the component will be updated
+  - `onUpdated` - called after the component has been updated
   - `onBeforeUnmount` - called before the component will be removed
   - `onUnmounted` - called once the component has been removed
 - [Helpers](#helpers)
@@ -41,8 +224,15 @@ interface RiotCoreComponent {
   // automatically generated on any component instance
   props: object;
   root: HTMLElement;
-  mount(element: HTMLElement, initialState?: object, parentScope?: object): RiotComponent;
-  update(newState?:object, parentScope?: object): RiotComponent;
+  mount(
+    element: HTMLElement,
+    initialState?: object,
+    parentScope?: object
+  ): RiotComponent;
+  update(
+    newState?:object,
+    parentScope?: object
+  ): RiotComponent;
   unmount(keepRootElement: boolean): RiotComponent;
 
   // Helpers
@@ -54,6 +244,9 @@ interface RiotCoreComponent {
 interface RiotComponent extends RiotCoreComponent {
   // optional on the component object
   state?: object;
+
+  // optional alias to map the children component names
+  components?: object;
 
   // state handling methods
   shouldUpdate?(newProps:object, currentProps:object): boolean;
@@ -128,7 +321,7 @@ window.someGlobalVariable = 'Hello!'
 
 `component.mount(element: HTMLElement, initialState?: object, parentScope?: object): RiotComponent;`
 
-Any component object can should "mounted on a DOM node" in order to rendered its template becoming interactive.
+Any component object will be mounted on a DOM node in order to rendered its template becoming interactive.
 
 You will likely never call the `component.mount` method by yourself, you will use instead the [riot.mount](#riotmount) or [riot.component](#riotcomponent) instead.
 
@@ -156,7 +349,7 @@ myComponent.unmount(true)
 
 #### component.state
 
-Each riot component created has a `state` object property. The `state` object is meant to store all the mutable component properties. For example:
+Any Riot.js component created has a `state` object property. The `state` object is meant to store all the mutable component properties. For example:
 
 ```html
 <my-component>
@@ -173,9 +366,9 @@ Each riot component created has a `state` object property. The `state` object is
 </my-component>
 ```
 
-In this case the component is created with an initial state that can be modified internally via the `component.update` method.
+In this case the component is created with an initial state that can be modified internally via `component.update`.
 
-You should avoid to store nested javascript objects into the state property because their references will be shared across multiple component and might generate side effects. To avoid surprises you can export your components also as function
+You should avoid to store nested javascript objects into the state property because their references will be shared across multiple component and might generate side effects. To avoid undesired surprises you can create your components also using a factory function
 
 ```html
 <my-component>
@@ -198,11 +391,46 @@ You should avoid to store nested javascript objects into the state property beca
 </my-component>
 ```
 
+Riot.js will automatically call the function anytime a new component will be mounted.
+
+#### component.components
+
+If you want to avoid registering global Riot.js components you can map your children components directly on your component object. For example:
+
+```html
+<my-component>
+  <!-- this component is only available in `<my-component>` -->
+  <my-child/>
+
+  <!-- this component is named differently and was aliased -->
+  <aliased-name/>
+
+  <!-- this component was already registered via riot.register -->
+  <global-component/>
+
+  <script>
+    import MyChild from './my-child.riot'
+    import User from './user.riot'
+
+    export default {
+      components: {
+        MyChild,
+        'aliased-name': User
+      }
+    }
+  </script>
+</my-component>
+```
+
+<div class="note note--info">
+  For this example we assume that you are bundling your application via webpack, rollup, parcel or browserify
+</div>
+
 #### component.update
 
 `component.update(newState?:object, parentScope?: object): RiotComponent;`
 
-Updates the component `state` object triggering the re-rendering of all its expressions. This method can eventually be called every time an event handler is dispatched and the user interacts with the application.
+Updates the component `state` object re-rendering all its expressions. This method can be usually called every time an event handler is dispatched when the user interacts with the application.
 
 ``` html
 <my-component>
@@ -252,7 +480,8 @@ You can call this method also manually whenever you need to update your componen
 
 On above example the error message is displayed on the UI after the `update()` method has been called.
 
-If you want to have more control over your tags DOM updates you can set a custom `shouldUpdate` function, and your tag will update only if that function will return `true`
+If you want to have more control over your tags DOM updates you can set rely on the `shouldUpdate` function return.
+Riot.js will update your component only if that function will return `true`
 
 ``` html
 <my-component>
@@ -308,13 +537,15 @@ The `shouldUpdate` method will always receive 2 arguments: the first one contain
   <script>
     export default {
       shouldUpdate(newProps, currentProps) {
-        // update the DOM depending on the new options received
+        // update the DOM depending on the new properties received
         return newProps.message !== 'goodbye'
       }
     }
   </script>
 </child-tag>
 ```
+
+
 
 ###  Slots
 
@@ -336,7 +567,7 @@ anytime you will include the `<my-post>` tag in your app
 </my-post>
 ```
 
-once mounted `riot.mount('my-post')` it will be rendered in this way:
+once mounted it will be rendered in this way:
 
 ``` html
 <my-post>
@@ -345,11 +576,13 @@ once mounted `riot.mount('my-post')` it will be rendered in this way:
 </my-post>
 ```
 
-The expressions in slot tags will not have access to the properties of the components in which they will be injected
+The expressions in slot tags will not have access to the properties of the components in which they are injected
 
 ``` html
 <!-- This tag just inherits the yielded DOM -->
-<child-tag><slot/></child-tag>
+<child-tag>
+  <slot/>
+</child-tag>
 
 <my-component>
   <child-tag>
@@ -366,7 +599,7 @@ The expressions in slot tags will not have access to the properties of the compo
 
 #### Named Slots
 
-The `<slot>` tag provides also a mechanism to inject fragments of html specific part of a component template
+The `<slot>` tag provides also a mechanism to inject html in specific sections of a component template
 
 For example using the following riot tag `my-other-post`
 
@@ -395,7 +628,7 @@ anytime you will include the `<my-other-post>` tag in your app
 </my-other-post>
 ```
 
-once mounted `riot.mount('my-other-post')` it will be rendered in this way:
+once mounted it will be rendered in this way:
 
 ``` html
 <my-other-post>
@@ -413,206 +646,227 @@ once mounted `riot.mount('my-other-post')` it will be rendered in this way:
 
 ### Lifecycle
 
-Each tag instance is an [observable](./observable) so you can use `on` and `one` methods to listen to the events that happen on the tag instance. Here's the list of supported events:
+Each component object can rely on the following callbacks to handle its internal state:
 
-
-- "update" – right before the tag is updated. allows recalculation of context data before the UI expressions are updated.
-- "updated" – right after the tag is updated. allows do some work with updated DOM
-- "before-mount" – right before tag is mounted on the page
-- "mount" – right after tag is mounted on the page
-- "before-unmount" – before the tag is removed from the page
-- "unmount" – after the tag is removed from the page
+  - `onBeforeMount` - called before the component will be mounted
+  - `onMounted` - called after the component has rendered
+  - `onBeforeUpdate` - called before the component will be updated
+  - `onUpdated` - called after the component has been updated
+  - `onBeforeUnmount` - called before the component will be removed
+  - `onUnmounted` - called once the component has been removed
 
 For example:
 
-``` js
-// cleanup resources after tag is no longer part of DOM
-this.on('unmount', function() {
-  clearTimeout(timer)
-})
+```html
+<my-component>
+  <p>{ state.message }</p>
+
+  <script>
+    export default {
+      onBeforeMount() {
+        this.state = {
+          message: 'Hello there'
+        }
+      }
+    }
+  </script>
+</my-component>
+```
+
+All the lifecycle methods will receive 2 arguments `props` and `state`, they are aliases of the `this.props` and `this.state` component attributes.
+
+```html
+<my-component>
+  <p>{ state.message }</p>
+
+  <script>
+    export default {
+      state: {
+        message: 'Hello there'
+      },
+      onBeforeMount(props, state) {
+        console.assert(this.state === state) // ok!
+        console.log(state.message) // Hello there
+      }
+    }
+  </script>
+</my-component>
 ```
 
 ### Helpers
 
+Any Riot.js component provides two helpers to query DOM nodes contained in its rendered template.
+
+ - `component.$(selector: string): HTMLElement` - returns a single node located in the component markup
+ - `component.$$(selector: string): [HTMLElemet]` - returns all the DOM nodes matched by the selector containing the component markup
+
+You can use the component helpers for doing simple DOM queries:
+
+```html
+<my-component>
+  <ul>
+    <li each={ item in items }>
+      { item }
+    </li>
+  </ul>
+
+  <script>
+    export default {
+      onMounted() {
+        // queries
+        const ul = this.$('ul')
+        const lis = this.$$('li')
+
+        // do something with the DOM nodes
+        const lisWidths = lis.map(li => li.offsetWidth)
+        const {top, left} = ul.getBoundingClientRect()
+      }
+    }
+  </script>
+</my-component>
+```
+
 ### Manual construction
 
-#### riot.tag(tagName, html, [css], [attrs], [constructor])
+Riot.js components are meant to be compiled to javascript via [@riotjs/compiler](/compiler). However you can build them manually with any rendering engine you like.
 
-Creates a new custom tag "manually" without the compiler.
+#### Component shell interface
 
-- `tagName` the tag name
-- `html` is the layout with [expressions](/guide/#expressions)
-- `css` is the style for the tag (optional)
-- `attrs` string of attributes for the tag (optional).
-- `constructor` is the initialization function being called before the tag expressions are calculated and before the tag is mounted
+The Riot.js compiler just creates a shell object that will be transformed internally by riot to create the [component object](#component-interface). If want to build this shell object manually it's worth to understand its interface first:
 
-#### Example
+```ts
+interface RiotComponentShell {
+  css?: string;
+  exports?: object|function|class;
+  name?: string;
+  template(): RiotComponentTemplate;
+}
+```
 
-``` javascript
-riot.tag('timer',
-  '<p>Seconds Elapsed: { time }</p>',
-  'timer { display: block; border: 2px }',
-  'class="tic-toc"',
-  function (opts) {
-    var self = this
-    this.time = opts.start || 0
+The `RiotComponentShell` object consists of 4 properties:
 
-    this.tick = function () {
-      self.update({ time: ++self.time })
+- `css` - the component css as string
+- `exports` - the component `export default` public API
+- `name` - the component name
+- `template` - the factory function to manage the component template
+
+#### Template interface
+
+The template function should return an interface compatible to the following one:
+
+```ts
+interface RiotComponentTemplate {
+  update(scope: object): RiotComponentTemplate;
+  mount(element: HTMLElement, scope: object): RiotComponentTemplate;
+  createDOM(element: HTMLElement): RiotComponentTemplate;
+  unmount(scope: object): RiotComponentTemplate;
+  clone(): RiotComponentTemplate;
+}
+```
+
+The `RiotComponentTemplate` is an object and it's responsible to handle the component rendering:
+
+- `update` - method that will receive the component data and must be used to update the template
+- `mount` - method that must be used to connect the component template to a DOM node
+- `createDOM` - factory function might be needed to create the template DOM structure only once
+- `unmount` - method to clean up the component DOM
+- `clone` - method might be needed to clone the original template object in order to work with multiple instances
+
+#### Examples
+
+This example uses the [@riotjs/dom-bindings (riot core template engine)](https://github.com/riot/dom-bindings)
+
+```js
+import { template, expressionTypes } from '@riotjs/dom-bindings'
+
+riot.register('my-component', {
+  css: ':host { color: red; }',
+  name: 'my-component',
+  exports: {
+    onMounted() {
+      console.log('I am mounted')
     }
-
-    var timer = setInterval(this.tick, 1000)
-
-    this.on('unmount', function () {
-      clearInterval(timer)
-    })
-
-  })
-```
-
-See [timer demo](http://jsfiddle.net/gnumanth/h9kuozp5/) and [riot.tag](/api/#component-object) API docs for more details and *limitations*.
-
-
-<span class="tag red">Warning</span> by using `riot.tag` you cannot enjoy the advantages of the compiler and the following features are not supported:
-
-1. Self-closing tags
-2. Unquoted expressions. Write `attr="{ val }"` instead of `attr={ val }`
-3. Shorthand ES6 method signatures
-4. `<img src={ src }>` must be written as `<img riot-src={ src }>` in order to avoid illegal server requests
-5. `<input value={ val }>` must be written as `<img riot-value={ val }>` in order to avoid unexpected IE issues
-5. `style="color: { color }"` must be written as `riot-style="color: { color }"` so that style attribute expressions work in IE
-6. Scoped CSS precompilation.
-
-
-You can take advantage of `<template>` or `<script>` tags as follows:
-
-``` html
-<script type="tmpl" id="my_tmpl">
-  <h3>{ opts.hello }</h3>
-  <p>And a paragraph</p>
-</script>
-
-<script>
-riot.tag('tag-name', my_tmpl.innerHTML, function(opts) {
-
+  },
+  template() {
+    return template('<p><!----></p>', [{
+      selector: 'p',
+      expressions: [
+        {
+          type: expressionTypes.TEXT,
+          childNodeIndex: 0,
+          evaluate: scope => `Hello ${scope.greeting}`
+        }
+      ]
+    }])
+  }
 })
-</script>
 ```
 
+Read about the [template engine API](https://github.com/riot/dom-bindings)
+
+You can also use any other kind of template engine if you like.
+This example uses [lit-html](https://lit-html.polymer-project.org/) as template engine
+
+```js
+import {html, render} from 'lit-html'
+
+riot.register('my-component', {
+  css: ':host { color: red; }',
+  name: 'my-component',
+  exports: {
+    onMounted() {
+      console.log('I am mounted')
+    }
+  },
+  template() {
+    const template = ({name}) => html`<p>Hello ${name}!</p>`
+
+    return {
+      mount(element, scope) {
+        this.el = element
+
+        this.update(scope)
+      },
+      update(scope) {
+        render(template(scope), this.el)
+      },
+      unmount() {
+        this.el.parentNode.removeChild(this.el)
+      },
+      // the following methods are not necessary for lit-html
+      createDOM(element) {},
+      clone() {}
+    }
+  }
+})
+```
 
 #### Tags without template
 
-<span class="tag red">&gt;=3.5.0</span>
-
-Starting from riot 3.5 you can also create "wrapper tags" without any template as follows:
+You can also create "wrapper tags" without any template as follows:
 
 ``` js
-riot.tag('tag-name', false, function(opts) {
-  this.message = 'hi'
+riot.register('my-component', {
+  name: 'my-component',
+  exports: {
+    onMounted() {
+      console.log('I am mounted')
+    }
+  }
 })
 
 ```
 
-In this case anytime you will mount a tag named `tag-name` riot will leave the tag markup untouched parsing and rendering only the expressions contained in it:
+In this case anytime you will mount a tag named `my-component` riot will leave the component markup as it is without parsing it:
 
 ```html
 <html>
 <body>
-  <tag-name>
-    <p>I want to say { message }</p>
-  </tag-name>
+  <my-component>
+    <p>I want to say Hello</p>
+  </my-component>
 </body>
 </html>
 ```
 
 This technique might be used to enhance serverside rendered templates.
-It will allow you also creating new tags composition patterns wrapping logic agnostic children components communicating with wrapper tags where you can handle your application logic:
-
-
-```html
-<form-validator>
-  <date-picker onchange={ updateDate } />
-  <color-picker onchange={ pickAColor } />
-  <errors-reporter if={ errors.length } errors={ errors }/>
-</form-validator>
-```
-
-## Core API
-
-### riot.mount
-
-`riot.mount(selector: string, props?: object, componentName?: string): [RiotComponent]`
-
-1. `selector` selects elements from the page and mounts them with a custom components. The selected elements' name must match the custom tag name. DOM nodes having the `is` attribute can also be automounted
-
-2. `props` optional object is passed for the component to consume. This can be anything, ranging from a simple object to a full application API. Or it can be a Flux- store. Really depends on how you want to structure your client-side applications. *Also note* that attributes you set on your tags will take precedence over ones specified with same names via `props` argument.
-
-3. `componentName` optional component name in case the node to mount can't be automounted by riot
-
-<strong>@returns: </strong>an array of the mounted [component objects](#component-object)
-
-
-Examples:
-
-``` js
-// selects and mounts all <pricing> tags on the page
-const components = riot.mount('pricing')
-
-// mount all custom components with a class name .customer
-const components = riot.mount('.customer')
-
-// mount <account> tag and pass an API object as options
-const components = riot.mount('account', api)
-```
-
-Note: users of [In-browser compilation](/compiler/#in-browser-compilation) will need to wait the components compilation before calling the `riot.mount` method.
-
-```javascript
-(async function main() {
-  await riot.compile()
-
-  const components = riot.mount('user')
-}())
-```
-
-The `opts` argument can be also a function in order to avoid sharing the same object across several tag instances [riot/2613](https://github.com/riot/riot/issues/2613)
-
-``` js
-riot.mount('my-component', () => ({
-  custom: 'option'
-}))
-```
-### riot.unmount
-
-### riot.component
-
-### riot.install
-
-### riot.uninstall
-
-### riot.register
-
-### riot.unregister
-
-`riot.unregister(tagName)`
-
-Unregistering a tag previously created via compiler or via `riot.register()`
-This method could be handy in case you need to test your app and you want to create multiple
-tags using the same name for example
-
-```js
-// create a test component
-riot.register('test-component', TestComponent)
-
-// mount it
-const [component] = riot.mount(document.createElement('div'), 'test-component')
-expect(component.root.querySelector('p')).to.be.ok
-
-// unregister the tag
-riot.unregister('test-component')
-
-// recreate the same component using a different template
-riot.register('test-component', TestComponent2)
-```
-
-### riot.version

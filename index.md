@@ -106,7 +106,7 @@ Riot.js tags are [compiled](/compiler/) to pure javascript before browsers can e
 #### Tooling friendly
 - Integrate NPM ecosystem
 - Node.js [require hooks](https://github.com/riot/ssr#usage)
-- Develop with [webpack](https://github.com/riot/webpack-loader), [rollup](https://github.com/riot/rollup-plugin-riot), [parcel](https://github.com/riot/parcel-plugin-riot) or [Browserify](https://github.com/riot/riotify) plugins
+- Develop with [webpack](https://github.com/riot/webpack-loader), [rollup](https://github.com/riot/rollup-plugin-riot), [parcel](https://github.com/riot/parcel-plugin-riot) or [browserify](https://github.com/riot/riotify) plugins
 
 
 ## 2. Simple and minimalistic
