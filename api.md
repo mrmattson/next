@@ -141,10 +141,10 @@ uninstall(uid)
 
 ```js
 import { register, mount } from 'riot'
-import MyComponet from './my-component.riot'
+import MyComponent from './my-component.riot'
 
 // register the my-component as global component
-register('my-component', MyComponet)
+register('my-component', MyComponent)
 
 // find all the DOM nodes called `<my-component>` and
 // mount them with the component previously registered
@@ -153,7 +153,7 @@ mount('my-component')
 
 ### riot.unregister
 
-`riot.unregister(name: string)`: Map
+`riot.unregister(name: string): Map`
 
 1. `name` - the component name
 
