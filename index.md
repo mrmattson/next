@@ -25,7 +25,7 @@ Riot.js brings custom elements to all modern browsers without the use of any pol
   </ul>
 
   <form onsubmit={ add }>
-    <input>
+    <input name="todo">
     <button>Add #{ state.items.length + 1 }</button>
   </form>
 
@@ -44,7 +44,7 @@ Riot.js brings custom elements to all modern browsers without the use of any pol
       },
       add(e) {
         e.preventDefault()
-        const input = e.target
+        const input = e.target.todo
 
         this.state.items.push(input.value)
         this.update()
