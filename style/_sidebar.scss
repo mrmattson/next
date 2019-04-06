@@ -8,7 +8,15 @@
     width: $sidebar-width;
     height: 100vh;
     overflow: auto;
+    padding-bottom: 8rem;
   }
+
+  .toc {
+    @include mq($from: 'mobile') {
+      padding-bottom: 12rem;
+    }
+  }
+
 
   .logo {
     padding: 1.6rem 0 0;
@@ -45,6 +53,7 @@
     margin: 0;
     font-size: 1.6rem;
     padding: 0.6rem 0;
+
 
     li {
       ul > li {

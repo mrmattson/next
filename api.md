@@ -36,7 +36,7 @@ const components = riot.mount('account', api)
 const components = riot.mount('#root', api, 'app')
 ```
 
-Note: users of [In-browser compilation](/compiler/#in-browser-compilation) will need to wait the components compilation before calling the `riot.mount` method.
+Note: users of [In-browser compilation]({{ '/compiler/#in-browser-compilation' | prepend:site.baseurl }}) will need to wait the components compilation before calling the `riot.mount` method.
 
 ```javascript
 (async function main() {
@@ -728,7 +728,7 @@ You can use the component helpers for doing simple DOM queries:
 
 ### Manual construction
 
-Riot.js components are meant to be compiled to javascript via [@riotjs/compiler](/compiler). However you can build them manually with any rendering engine you like.
+Riot.js components are meant to be compiled to javascript via [@riotjs/compiler]({{ '/compiler' | prepend:site.baseurl }}). However you can build them manually with any rendering engine you like.
 
 #### Component shell interface
 

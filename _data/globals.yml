@@ -3,4 +3,4 @@ version_slurp:       Reboot
 repo:                https://github.com/riot/riot
 twitter_account:     https://twitter.com/riotjs_
 gitter:              https://gitter.im/riot/riot
-showcase: /made-with-riot/
+showcase:            /made-with-riot/

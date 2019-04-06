@@ -83,7 +83,7 @@ Custom tags let you build complex views with HTML. Your application might look s
 
 HTML syntax is the *de facto* language of the web and it's designed for building user interfaces. The syntax is explicit, nesting is inherent to the language, and attributes offer a clean way to provide options for custom tags.
 
-Riot.js tags are [compiled](/compiler/) to pure javascript before browsers can execute them.
+Riot.js tags are [compiled]({{ '/compiler/' | prepend:site.baseurl }}) to pure javascript before browsers can execute them.
 
 
 #### DOM Expressions binding

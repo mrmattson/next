@@ -11,8 +11,8 @@
     padding: 0 1.6rem;
   }
 
-  @at-root {
-    .detail {
+  @at-root .detail {
+    .container {
       @include mq($from: 'mobile') {
         max-width: $container-max-width + $sidebar-width;
         padding-left: $sidebar-width;
@@ -20,8 +20,8 @@
     }
   }
 
-  @at-root {
-    .not-found {
+  @at-root .not-found {
+    .container {
       display: flex;
       align-items: center;
       justify-content: center;
