@@ -4,16 +4,16 @@ title: Riot.js — Simple and elegant component-based UI library
 description: Riot.js lets you build user interfaces with custom tags using simple and enjoyable syntax.
 ---
 
-## Why do we need a new UI library?
+## なぜ新しいUIライブラリが必要なのか？
 
-The frontend space is indeed crowded, but we honestly feel the solution is still "out there". We believe Riot.js offers the right balance for solving the great puzzle.
-
-So — here's why we need one:
+フロントエンドの世界にはライブラリが溢れてはいるものの、正直なところソリューションはまだ、「他にある」と感じています。私たちは、この大きなパズルを解くために、Riot.jsが最良のバランスを提供すると信じています。
 
 
-### 1. Custom elements
+だから——私たちには新しいライブラリが必要なのです:
 
-Riot.js brings custom elements to all modern browsers without the use of any polyfill!
+### 1. カスタム要素
+
+Riot.jsはポリフィルを使用せずにすべての最新ブラウザにカスタム要素をもたらします！
 
 ``` html
 <todo>
@@ -56,11 +56,11 @@ Riot.js brings custom elements to all modern browsers without the use of any pol
 </todo>
 ```
 
-A custom element glues relevant HTML and javascript together forming a reusable component. Think React + Polymer but with enjoyable syntax and a small learning curve.
+カスタム要素は関連する HTML と JavaScript を結合し再利用可能なコンポーネントを形成します。React + Polymerも考えられますが、Riot.jsの構文はより楽しく学習曲線も小さいです。
 
-#### Human-readable
+#### ヒューマンリーダブル
 
-Custom tags let you build complex views with HTML. Your application might look something like this:
+カスタムタグは複雑な HTML のビューを構成することを可能にします。あなたのアプリケーションは次のようになるでしょう:
 
 ``` html
 <body>
@@ -81,88 +81,88 @@ Custom tags let you build complex views with HTML. Your application might look s
 </body>
 ```
 
-HTML syntax is the *de facto* language of the web and it's designed for building user interfaces. The syntax is explicit, nesting is inherent to the language, and attributes offer a clean way to provide options for custom tags.
+HTML の構文は web の *事実上の* 言語であり、ユーザーインターフェースを構築するために設計されています。その文法は明示的、ネストは言語固有のもの、そして属性はカスタムタグにオプションを与える明確な方法を提供します。
 
-Riot.js tags are [compiled](/compiler/) to pure javascript before browsers can execute them.
-
-
-#### DOM Expressions binding
-- Absolutely the smallest possible amount of DOM updates
-- One way data flow: updates and unmounts are propagated downwards from parent to children
-- Expressions are pre-compiled and cached for high performance
-- Lifecycle events for more control
-- Server-side rendering of custom tags for universal (isomorphic) applications
+Riot.js のタグはブラウザに実行される前に素の javascriptに [コンパイル](/compiler/) されます。
 
 
-#### Close to standards
-- No proprietary event system
-- No need for external polyfills or additional libraries
-- The rendered DOM can be freely manipulated with other tools
-- No extra HTML root elements or `data-` attributes
-- Web Components like API
-- Modern modules syntax
+#### 式、値の DOM へのバインディング
+- DOM 更新の量をできるだけ最小限に
+- 単方向のデータフロー: 更新やアンマウントは親から子へと下に伝搬される
+- 高速化のため、テンプレート構文はプリコンパイルされキャッシュされる
+- より細かく制御するためのライフサイクルイベント
+- ユニバーサル（アイソモーフィック）なアプリケーションのためのカスタムタグのサーバーサイドレンダリング
 
 
-#### Tooling friendly
-- Integrate NPM ecosystem
-- Node.js [require hooks](https://github.com/riot/ssr#usage)
-- Develop with [webpack](https://github.com/riot/webpack-loader), [rollup](https://github.com/riot/rollup-plugin-riot), [parcel](https://github.com/riot/parcel-plugin-riot) or [browserify](https://github.com/riot/riotify) plugins
+#### 標準に近い
+- 独自のイベントシステムはなし
+- 外部のポリフィルやライブラリの追加は不要
+- レンダリングされたDOMは、自由に他のツールから操作可能
+- HTML のルート要素や `data-` 属性は不要
+- Web Components に似た API
+- モダンな modules 構文
 
 
-## 2. Simple and minimalistic
-
-Minimalism sets Riot.js apart from others:
-
-### 1. Enjoyable syntax
-
-One of the design goals was to introduce a powerful tag syntax with as little boilerplate as possible:
-
-- No extra brain load for attributes like `className`, `htmlFor`...
-- Shortcut spread operator for multiple attributes: `<p ...{ attributes }></p>`
-- Expressions Interpolation: `Add #{ items.length + 1 }` or `class="item { activeClass }"`
-- `export default` statement to define the tags public interfaces
-- No side effects due to asynchronous rendering or `Proxy` objects
-- functional API over OOP class based syntax
-- Automatic CSS styling via `<style>` tag without shadow DOM hassle
+#### 他ツールとの相性が良い
+- NPM エコシステムに統合
+- Node.js の [require フック](https://github.com/riot/ssr#usage)
+- [webpack](https://github.com/riot/webpack-loader), [rollup](https://github.com/riot/rollup-plugin-riot), [parcel](https://github.com/riot/parcel-plugin-riot) や [browserify](https://github.com/riot/riotify) プラグインを利用した開発
 
 
-### 2. Small learning curve
+## 2. シンプルかつミニマリスト
 
-Riot.js has between 10 and 100 times fewer API methods than other UI libraries.
+Riot.js はミニマリズムであるということが他のライブラリと一線を画しています:
 
-- Less to learn. Fewer books and tutorials to view
-- Only 3 template directives to learn `if`, `each` and `is`
-- Less proprietary stuff
-- No Proxies or magic happening under the hood
-- Explicit behaviors over implicit assumptions
+### 1. 楽しい文法
+
+デザインのゴールの一つは、できる限り最小限の ”boilerplate” で使える強力なタグ構文を導入することでした:
+
+- `className`, `htmlFor`...のような属性のために脳に余分な負荷をかけない
+- 複数の属性に対するスプレッド演算子を用いたショートカット: `<p ...{ attributes }></p>`
+- 式の補間: `Add #{ items.length + 1 }` や `class="item { activeClass }"`
+- タグを定義するための `export default` というパブリックインターフェースの記述
+- 非同期レンダリングや `Proxy` オブジェクトによる副作用はない
+- OOP クラスベースの構文に則った実用的な API
+- `<style>` タグにより shadow DOM と混乱することなく自動で CSS スタイリング可能
 
 
-### 3. Tiny size
+### 2. 小さな学習曲線
+
+Riot.jsは他の UI ライブラリと比較して API メソッドの数が 10分の1 から 100分の1ほどです。
+
+- 学ぶことが少ない。閲覧する書籍やチュートリアルが少なくなる
+- 学ぶべきテンプレートディレクティブはたったの3つだけ `if`, `each` そして `is`
+- 独自性の物が少ない
+- フードの下プロキシや魔法のようなことは起きていない
+- 暗黙の仮定に覆われた明示的な振る舞い
+
+
+### 3. サイズが小さい
 
 {% include libraries_comparison.html %}
 
-- Only 6kb!
-- Fewer bugs
-- Faster to parse and cheaper to download
-- Embeddable. The library ought to be smaller than the application
-- Less to maintain. We don't need a big team to maintain Riot
+- たったの 6kb！
+- 少ないバグ
+- パースが早く、ダウンロードも容易
+- 組み込みやすい。ライブラリはアプリケーションよりも小さくなるべきである
+- メンテナンスコストが小さい。我々は Riot を維持するための大きなチームを必要としない
 
 
-### 4. Small, but complete
+### 4. 小さいが必要十分
 
-Riot.js has all the essential building blocks for modern client-side applications:
+Riotはモダンなクライアントサイドのアプリケーションを作るための、基本的な構成単位をすべて備えています:
 
-- Modular views for building user interfaces
-- High performance also with many DOM nodes
-- Highly extensible and not opinionated
+- ユーザーインターフェースを構築するためのモダンなビュー
+- 多くの DOM ノードの場合でもハイパフォーマンス
+- 拡張性が高く、かつ独自性は低い
 
-Riot.js is an "open stack". It's meant for developers who want to avoid framework specific idioms. The generic tools let you mix and match design patterns you prefer most.
+Riot.js は一つの"オープンスタック"です。つまり、フレームワーク固有のイディオムを避けたい開発者のためのもの、を意味します。一般的なツールを使用すると、あなたの最も好みのデザインパターンを組み合わせることができます。
 
-## Conclusion
+## まとめ
 
-Riot.js is Web Components for everyone. Think React + Polymer but without the bloat. Its API is heavily inspired by Vue.js but it contains instead just the bare minimum to build a modern frontend project. It's intuitive to use and it weighs almost nothing. And it works today. No reinventing the wheel, but rather taking the good parts of what's there and making the simplest tool possible.
+Riot.js is は誰でも使えるWeb Components です。React + Polymer から無駄を省いたものを想像してください。Vue.js にインスピレーションを受けたその API は豊富で、それでいて現代のフロントエンドプロジェクトを構築するために、最低限必要なもののみを含んでいます。ごく自然に使用でき、とても軽い。そして、今日から使えます。車輪の再発明をするのではなく、むしろそこにあるものの良いとこ取りをし、可能な限り最もシンプルなツールにしました。
 
-The Riot.js design was driven by [*The Zen of Python, by Tim Peters*](https://en.wikipedia.org/wiki/Zen_of_Python) philosophy, that's our mantra:
+Riot.js の設計は [*Tim Peters 氏の The Zen of Python*](https://en.wikipedia.org/wiki/Zen_of_Python) という思想（哲学）から駆動去れました。それが我々のマントラです:
 
 > Beautiful is better than ugly.<br/>
 > Explicit is better than implicit.<br/>
