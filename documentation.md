@@ -78,14 +78,14 @@ Riot custom components are the building blocks for user interfaces. They make th
         <input
           type="checkbox"
           checked={ item.done }
-          onclick={ () => toggle(item) }>
+          onclick={ () => toggle(item) } />
         { item.title }
       </label>
     </li>
   </ul>
 
   <form onsubmit={ add }>
-    <input onkeyup={ edit }>
+    <input onkeyup={ edit } />
     <button disabled={ !state.text }>
       Add #{ state.items.length + 1 }
     </button>
