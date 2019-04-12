@@ -38,7 +38,7 @@ For example:
 
 <!-- compile and mount -->
 <script>
-(function async main() {
+(async function main() {
   await riot.compile()
 
   riot.mount('my-tag')
